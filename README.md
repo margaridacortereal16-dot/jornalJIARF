@@ -1,2 +1,2 @@
-# appfotosJI
-App para fazer post para JI
+# Jornal JI ARF
+App para fazer um jornal para o JI
