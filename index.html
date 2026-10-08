@@ -1,0 +1,3035 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traquinices & Companhia — Jornal do JI Alexandre Rodrigues Ferreira</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+    }
+    .font-title {
+      font-family: 'Fredoka', cursive, sans-serif;
+    }
+    .font-hand {
+      font-family: 'Caveat', cursive;
+    }
+
+    /* Regras estritas de impressão para gerar PDF com 4 páginas A4 perfeitas */
+    @media print {
+      body {
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-area {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+      }
+      .sheet-a4 {
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        padding: 8mm !important;
+        width: 100% !important;
+        min-height: 285mm !important;
+        height: auto !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        display: flex !important;
+        margin-bottom: 0 !important;
+      }
+      .sheet-a4:last-child {
+        page-break-after: auto !important;
+        break-after: auto !important;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 6mm;
+      }
+    }
+
+    /* Scrollbar suave */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #fdf6ee;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #fcd34d;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f59e0b;
+    }
+  </style>
+</head>
+<body class="bg-amber-50/40 text-slate-800 min-h-screen flex flex-col antialiased">
+
+  <!-- BARRA SUPERIOR DE FERRAMENTAS -->
+  <header class="no-print bg-white/95 backdrop-blur border-b border-amber-200 sticky top-0 z-50 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Logotipo & Nome do Jornal -->
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-amber-500 text-white flex items-center justify-center font-bold text-2xl shadow-inner select-none relative overflow-hidden group">
+          <span class="transform transition group-hover:scale-125">🐿️</span>
+          <span class="absolute bottom-0 right-0 text-[10px]">✏️</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-bold font-title text-amber-900 leading-tight">
+              Traquinices &amp; Companhia
+            </h1>
+            <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
+              O T&amp;C
+            </span>
+          </div>
+          <p class="text-xs text-amber-700 font-medium">Jardim de Infância Alexandre Rodrigues Ferreira &bull; Edição Multi-Páginas</p>
+        </div>
+      </div>
+
+      <!-- Ações rápidas e Botão PDF -->
+      <div class="flex items-center gap-2 flex-wrap">
+        
+        <!-- Botão Assistente IA -->
+        <button onclick="openAiGlobalModal()" class="px-3 py-2 bg-purple-100 hover:bg-purple-200 text-purple-900 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs border border-purple-200" title="Assistente com Inteligência Artificial">
+          <span class="animate-pulse">✨</span>
+          <span>Assistente IA</span>
+        </button>
+
+        <!-- Botão Ajuda -->
+        <button onclick="toggleHelpModal()" class="px-3 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-xl text-xs font-bold transition flex items-center gap-1.5" title="Como funciona?">
+          <span>💡 Como usar?</span>
+        </button>
+
+        <!-- Botão Guardar Rascunho -->
+        <button onclick="saveManual()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5" title="Guardar rascunho no computador">
+          <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+          <span class="hidden sm:inline">Guardar</span>
+        </button>
+
+        <!-- Botão Baixar todas as páginas em PDF / Imprimir -->
+        <button onclick="openDownloadModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md shadow-emerald-600/20 transition flex items-center gap-2 transform active:scale-95">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          <span id="btn-download-label">Descarregar Jornal (4 Páginas PDF)</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- SELETOR DE PÁGINAS PARA EDIÇÃO E PRÉ-VISUALIZAÇÃO NO ECRÃ -->
+    <div class="bg-amber-100/70 border-t border-amber-200/80 px-4 py-1.5">
+      <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-2 text-xs">
+        <div class="flex items-center gap-1 font-bold text-slate-700">
+          <span>📖 A editar no ecrã:</span>
+        </div>
+        <div id="header-tabs-container" class="flex items-center gap-1.5 flex-wrap">
+          <button onclick="switchTab('capa')" id="tab-btn-capa" class="tab-button px-3 py-1.5 rounded-lg font-bold bg-amber-500 text-white shadow-xs transition flex items-center gap-1.5">
+            <span>📰 Capa / Geral</span>
+          </button>
+          <button onclick="switchTab('vermelha')" id="tab-btn-vermelha" class="tab-button px-3 py-1.5 rounded-lg font-bold bg-white text-rose-700 hover:bg-rose-50 border border-rose-200 transition flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+            <span>Sala Vermelha</span>
+          </button>
+          <button onclick="switchTab('verde')" id="tab-btn-verde" class="tab-button px-3 py-1.5 rounded-lg font-bold bg-white text-emerald-700 hover:bg-emerald-50 border border-emerald-200 transition flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <span>Sala Verde</span>
+          </button>
+          <button onclick="switchTab('azul')" id="tab-btn-azul" class="tab-button px-3 py-1.5 rounded-lg font-bold bg-white text-sky-700 hover:bg-sky-50 border border-sky-200 transition flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+            <span>Sala Azul</span>
+          </button>
+          <!-- Separadores de páginas extras inseridos aqui dinamicamente -->
+          <div id="header-extra-tabs" class="flex items-center gap-1.5 flex-wrap"></div>
+          <button onclick="switchTab('todas')" id="tab-btn-todas" class="tab-button px-3 py-1.5 rounded-lg font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-300 transition flex items-center gap-1.5">
+            <span id="tab-btn-todas-label">📑 Ver Todas (4 Páginas)</span>
+          </button>
+          <button onclick="addNewExtraPage()" class="px-3 py-1.5 rounded-lg font-bold bg-purple-600 hover:bg-purple-700 text-white shadow-xs transition flex items-center gap-1">
+            <span>➕ Adicionar Página</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENSAGEM FLUTUANTE (TOAST) -->
+  <div id="toast-box" class="fixed bottom-4 right-4 z-50 bg-slate-900 text-white text-xs px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2 transform transition-all duration-300 translate-y-20 opacity-0 pointer-events-none">
+    <span id="toast-icon">✅</span>
+    <span id="toast-text">Alterações gravadas com sucesso!</span>
+  </div>
+
+  <!-- MODAL: ASSISTENTE DE TEXTO COM IA (GEMINI) -->
+  <div id="ai-modal" class="no-print fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-purple-200 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b pb-3">
+        <h3 class="font-title text-lg text-purple-950 flex items-center gap-2">
+          <span>✨</span> Assistente de Escrita Inteligente (IA)
+        </h3>
+        <button onclick="closeAiModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center">&times;</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <p class="text-slate-600 leading-relaxed">
+          Escreva uma ideia simples ou palavras-chave (ex.: <em>"as crianças fizeram pão com farinha e água"</em>) e a IA gera um texto carinhoso e pedagógico pronto para o jornal.
+        </p>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">O que quer criar ou melhorar?</label>
+          <select id="ai-target-select" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 font-medium">
+            <option value="activity">Notícia de Atividade da Sala (relato caloroso)</option>
+            <option value="editorial">Editorial / Mensagem da Escola para os Pais</option>
+            <option value="mascot">Fala divertida do Esquilo Traquina</option>
+            <option value="quote">Sugestão de Pérola / Frase Infantil</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Ideia base ou notas da educadora:</label>
+          <textarea id="ai-user-prompt" rows="3" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-400 leading-relaxed" placeholder="Ex: Hoje fomos ao canteiro plantar alfaces e observar os caracóis na terra..."></textarea>
+        </div>
+
+        <!-- Opção de Tom -->
+        <div class="flex items-center gap-2">
+          <span class="text-slate-500 font-bold text-[11px]">Tom:</span>
+          <div class="flex gap-1.5">
+            <button type="button" onclick="setAiTone('carinhoso')" id="ai-tone-carinhoso" class="px-2.5 py-1 rounded-lg border border-purple-300 bg-purple-100 text-purple-900 font-bold text-[11px]">Afetuoso &amp; Pedagógico</button>
+            <button type="button" onclick="setAiTone('divertido')" id="ai-tone-divertido" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 font-medium text-[11px]">Traquinas &amp; Alegre</button>
+          </div>
+        </div>
+
+        <!-- Área de Resposta Gerada -->
+        <div id="ai-result-area" class="hidden space-y-2 pt-2 border-t border-slate-100">
+          <label class="block font-bold text-purple-900">Sugestão gerada pela IA:</label>
+          <div id="ai-result-text" class="p-3 bg-purple-50/60 border border-purple-200 rounded-xl text-slate-800 leading-relaxed italic select-text"></div>
+          <div class="flex justify-end gap-2 pt-1">
+            <button onclick="copyAiResult()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-[11px] transition">
+              Copiar
+            </button>
+            <button id="ai-apply-btn" onclick="applyAiResultDirectly()" class="px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl text-[11px] shadow-xs transition">
+              Inserir no Jornal
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-2 flex justify-between items-center border-t border-slate-100">
+        <span id="ai-loading-indicator" class="text-xs text-purple-600 font-bold items-center gap-1.5 hidden">
+          <svg class="animate-spin h-3.5 w-3.5 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+          <span>A IA está a criar o texto...</span>
+        </span>
+        <button id="ai-generate-btn" onclick="triggerAiGeneration()" class="ml-auto px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl text-xs transition flex items-center gap-1.5 shadow-sm">
+          <span>✨ Gerar Texto com IA</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: AJUDA RÁPIDA -->
+  <div id="help-modal" class="no-print fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-amber-100 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b pb-3">
+        <h3 class="font-title text-xl text-amber-900 flex items-center gap-2">
+          <span>🐿️</span> Como usar o Jornal "Traquinices &amp; Companhia"
+        </h3>
+        <button onclick="toggleHelpModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center">&times;</button>
+      </div>
+      <div class="text-xs sm:text-sm text-slate-600 space-y-3 leading-relaxed">
+        <p><strong>1. Estrutura em 4 Páginas:</strong> Tem a <em>Capa/Geral</em> com a mascote Traquina e o editorial da escola, e <em>3 páginas exclusivas</em> para as salas: <strong>Sala Vermelha</strong>, <strong>Sala Verde</strong> e <strong>Sala Azul</strong>.</p>
+        <p><strong>2. Navegar entre as salas:</strong> Use a barra no topo (ou os botões de edição) para alternar entre as salas e colocar as respetivas notícias, fotografias e frases divertidas.</p>
+        <p><strong>3. Fotografias reais:</strong> Clique em <em>"Adicionar Foto"</em> para carregar imagens diretamente do seu computador ou telemóvel para cada atividade.</p>
+        <p><strong>4. Impressão / Envio em PDF aos Pais:</strong> Quando carregar no botão verde <strong>"Descarregar Jornal (4 Páginas PDF)"</strong>, o sistema imprime todas as 4 páginas formatadas certinhas em tamanho A4!</p>
+        <p><strong>5. Privacidade:</strong> Nenhuma foto nem texto é partilhado na internet. Fica tudo seguro no navegador do seu próprio computador.</p>
+      </div>
+      <div class="pt-2 text-right">
+        <button onclick="toggleHelpModal()" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs transition">
+          Entendido, vamos criar o jornal!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DESCARREGAR E IMPRIMIR EM PDF -->
+  <div id="download-modal" class="no-print fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-emerald-200 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-9 h-9 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-lg">📄</span>
+          <div>
+            <h3 class="font-title text-base sm:text-lg text-slate-900 font-bold">Descarregar Jornal em PDF</h3>
+            <p class="text-xs text-slate-500 font-medium">Escolha a melhor opção para o seu computador</p>
+          </div>
+        </div>
+        <button onclick="closeDownloadModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center">&times;</button>
+      </div>
+
+      <div class="space-y-3">
+        <!-- Opção 1: Janela de Impressão Direta -->
+        <button onclick="triggerDirectPrint()" class="w-full text-left p-3.5 rounded-2xl border-2 border-emerald-500 bg-emerald-50/60 hover:bg-emerald-100/70 transition flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-lg shadow-sm">🖨️</span>
+            <div>
+              <span class="font-title font-bold text-emerald-950 text-sm block">1. Imprimir / Guardar em PDF Agora</span>
+              <span class="text-xs text-emerald-800 font-medium">Abre a caixa de diálogo direta de impressão</span>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-emerald-700 group-hover:translate-x-1 transition-transform">Iniciar &rarr;</span>
+        </button>
+
+        <!-- Opção 2: Abrir em Nova Aba (Ideal para contornar bloqueios de navegadores) -->
+        <button onclick="openInNewWindow()" class="w-full text-left p-3.5 rounded-2xl border border-sky-300 bg-sky-50/60 hover:bg-sky-100/70 transition flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center text-lg shadow-sm">🌐</span>
+            <div>
+              <span class="font-title font-bold text-sky-950 text-sm block">2. Abrir Numa Nova Aba</span>
+              <span class="text-xs text-sky-800 font-medium">Abre o jornal limpo num novo separador para imprimir sem restrições</span>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-sky-700 group-hover:translate-x-1 transition-transform">Abrir &rarr;</span>
+        </button>
+
+        <!-- Opção 3: Descarregar Ficheiro para o computador -->
+        <button onclick="downloadHtmlFile()" class="w-full text-left p-3.5 rounded-2xl border border-amber-300 bg-amber-50/60 hover:bg-amber-100/70 transition flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-lg shadow-sm">💾</span>
+            <div>
+              <span class="font-title font-bold text-amber-950 text-sm block">3. Descarregar Ficheiro do Jornal (.html)</span>
+              <span class="text-xs text-amber-800 font-medium">Guarda o ficheiro com fotos no seu computador</span>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-amber-700 group-hover:translate-x-1 transition-transform">Descarregar &rarr;</span>
+        </button>
+      </div>
+
+      <!-- Dica prática para gerar PDF limpo -->
+      <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl text-[11px] text-slate-600 space-y-1">
+        <p class="font-bold text-slate-800 flex items-center gap-1">
+          <span>💡</span> Como guardar em PDF na janela de impressão:
+        </p>
+        <p>1. No campo <strong>Destino</strong>, selecione <strong>"Guardar como PDF"</strong>.</p>
+        <p>2. Em <strong>Mais definições</strong>, ative a opção <strong>"Gráficos de segundo plano"</strong> para manter todas as cores e ilustrações.</p>
+      </div>
+    </div>
+  </div>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+    <!-- COLUNA 1: FORMULÁRIO DE PREENCHIMENTO RÁPIDO (ESQUERDA) -->
+    <section class="no-print lg:col-span-5 space-y-4">
+      
+      <!-- Seletor de Aba Ativa no Formulário -->
+      <div class="bg-white rounded-2xl p-3 shadow-xs border border-amber-200 flex items-center justify-between flex-wrap gap-2">
+        <span class="text-xs font-bold text-slate-700 flex items-center gap-1">
+          <span>✏️ Formulário da Secção:</span>
+        </span>
+        <div id="form-tabs-container" class="flex gap-1 flex-wrap">
+          <button onclick="switchTab('capa')" id="form-tab-capa" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-500 text-white transition">Capa</button>
+          <button onclick="switchTab('vermelha')" id="form-tab-vermelha" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 text-rose-700 hover:bg-rose-50 transition">Vermelha</button>
+          <button onclick="switchTab('verde')" id="form-tab-verde" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 text-emerald-700 hover:bg-emerald-50 transition">Verde</button>
+          <button onclick="switchTab('azul')" id="form-tab-azul" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 text-sky-700 hover:bg-sky-50 transition">Azul</button>
+          <div id="form-extra-tabs" class="flex gap-1 flex-wrap"></div>
+        </div>
+      </div>
+
+      <!-- PAINEL 1: EDIÇÃO DA CAPA / GERAL -->
+      <div id="editor-panel-capa" class="editor-section space-y-4">
+        
+        <!-- Identidade e Slogan -->
+        <div class="bg-white rounded-2xl p-4 shadow-xs border border-amber-200/80 space-y-3">
+          <div class="flex items-center justify-between border-b border-amber-100 pb-2">
+            <h2 class="font-title text-sm text-slate-800 font-bold flex items-center gap-1.5">
+              <span>🐿️</span> Cabeçalho e Identidade do Jornal
+            </h2>
+            <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">Capa</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5 text-xs">
+            <div class="col-span-2">
+              <label class="block font-bold text-slate-600 mb-1">Nome Principal do Jornal</label>
+              <input type="text" id="field-mainTitle" oninput="updateState('mainTitle', this.value)" 
+                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-400 focus:outline-none font-bold text-slate-800"
+                value="Traquinices & Companhia">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">Mês e Ano</label>
+              <input type="text" id="field-monthYear" oninput="updateState('monthYear', this.value)" 
+                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-400 focus:outline-none"
+                placeholder="Ex: Outubro 2026">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">Edição / Número</label>
+              <input type="text" id="field-edition" oninput="updateState('edition', this.value)" 
+                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-400 focus:outline-none"
+                placeholder="Ex: Ano letivo 2026/27 • Nº 1">
+            </div>
+            <div class="col-span-2">
+              <label class="block font-bold text-slate-600 mb-1">Slogan Principal (escolha ou personalize)</label>
+              <select id="select-slogan" onchange="applySloganChoice(this.value)" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-400 focus:outline-none text-xs mb-1.5 font-medium">
+                <option value="Pequenos traquinas, grandes notícias!">"Pequenos traquinas, grandes notícias!"</option>
+                <option value="Onde cada dia é uma aventura.">"Onde cada dia é uma aventura."</option>
+                <option value="As histórias de quem ainda está a aprender a escrever — mas já tem muito a dizer.">"As histórias de quem ainda está a aprender a escrever — mas já tem muito a dizer."</option>
+              </select>
+              <input type="text" id="field-slogan" oninput="updateState('slogan', this.value)" 
+                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-400 focus:outline-none text-slate-700 italic">
+            </div>
+            <div class="col-span-2">
+              <label class="block font-bold text-slate-600 mb-1">Assinatura / Slogan Secundário</label>
+              <input type="text" id="field-subSlogan" oninput="updateState('subSlogan', this.value)" 
+                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-400 focus:outline-none text-slate-700"
+                value="Feito por crianças, para quem gosta de sorrir.">
+            </div>
+          </div>
+        </div>
+
+        <!-- Mascote Traquina: Balão de Fala -->
+        <div class="bg-amber-100/50 rounded-2xl p-4 shadow-xs border border-amber-300/80 space-y-2.5">
+          <div class="flex items-center justify-between border-b border-amber-200 pb-2">
+            <h2 class="font-title text-sm text-amber-900 font-bold flex items-center gap-1.5">
+              <span>🐿️</span> O Esquilo Traquina Anda a Espiar!
+            </h2>
+            <div class="flex items-center gap-1">
+              <button onclick="openAiForField('mascotQuote', 'Fala do esquilo Traquina para a capa deste mês')" class="px-2 py-0.5 bg-purple-100 hover:bg-purple-200 text-purple-800 text-[10px] font-bold rounded-lg border border-purple-200 flex items-center gap-1 transition">
+                <span>✨ IA</span>
+              </button>
+              <span class="text-[10px] bg-amber-200 text-amber-900 font-bold px-2 py-0.5 rounded-full">Mascote</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-amber-800">Mensagem que o esquilo Traquina diz na capa da edição:</p>
+          <textarea id="field-mascotQuote" rows="2" oninput="updateState('mascotQuote', this.value)"
+            class="w-full px-3 py-2 bg-white border border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-400 focus:outline-none text-xs italic font-medium leading-relaxed"></textarea>
+        </div>
+
+        <!-- Editorial da Direção / Equipa Pedagógica -->
+        <div class="bg-white rounded-2xl p-4 shadow-xs border border-amber-200/80 space-y-3">
+          <div class="flex items-center justify-between border-b border-amber-100 pb-2">
+            <h2 class="font-title text-sm text-slate-800 font-bold flex items-center gap-1.5">
+              <span>💌</span> Editorial / Palavra da Escola
+            </h2>
+            <div class="flex items-center gap-1">
+              <button onclick="openAiForField('editorialText', 'Editorial caloroso da equipa pedagógica para os pais sobre este mês de atividades no jardim de infância')" class="px-2 py-0.5 bg-purple-100 hover:bg-purple-200 text-purple-800 text-[10px] font-bold rounded-lg border border-purple-200 flex items-center gap-1 transition">
+                <span>✨ Escrever com IA</span>
+              </button>
+              <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">Capa</span>
+            </div>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">Título do Editorial</label>
+              <input type="text" id="field-editorialTitle" oninput="updateState('editorialTitle', this.value)" 
+                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-400 focus:outline-none font-semibold">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">Texto Geral para as Famílias</label>
+              <textarea id="field-editorialText" rows="3" oninput="updateState('editorialText', this.value)"
+                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-400 focus:outline-none resize-y leading-relaxed"
+                placeholder="Uma mensagem calorosa da equipa pedagógica para toda a comunidade escolar..."></textarea>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">Assinatura</label>
+              <input type="text" id="field-editorialSign" oninput="updateState('editorialSign', this.value)" 
+                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-400 focus:outline-none">
+            </div>
+          </div>
+        </div>
+
+        <!-- Destaques Gerais da Capa (2 Notícias Transversais / Projetos do JI) -->
+        <div class="bg-white rounded-2xl p-4 shadow-xs border border-amber-200/80 space-y-3">
+          <div class="flex items-center justify-between border-b border-amber-100 pb-2">
+            <div>
+              <h2 class="font-title text-sm text-slate-800 font-bold flex items-center gap-1.5">
+                <span>⭐</span> Destaques Gerais do JI (Capa)
+              </h2>
+              <p class="text-[11px] text-slate-500 font-medium">Momentos partilhados por todo o Jardim de Infância</p>
+            </div>
+            <button onclick="addNewGeneralActivity()" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition flex items-center gap-1 shadow-xs">
+              <span>+ Destaque</span>
+            </button>
+          </div>
+
+          <div id="general-activities-form-container" class="space-y-3">
+            <!-- Gerado dinamicamente -->
+          </div>
+        </div>
+
+        <!-- Agenda Geral & Recados -->
+        <div class="bg-white rounded-2xl p-4 shadow-xs border border-amber-200/80 space-y-3">
+          <div class="flex items-center justify-between border-b border-amber-100 pb-2">
+            <h2 class="font-title text-sm text-slate-800 font-bold flex items-center gap-1.5">
+              <span>📅</span> Agenda Comum e Avisos Gerais
+            </h2>
+            <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">Capa</span>
+          </div>
+
+          <div class="space-y-2.5 text-xs">
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">Datas Importantes de Todo o JI (uma por linha)</label>
+              <textarea id="field-generalAgenda" rows="3" oninput="updateState('generalAgenda', this.value)"
+                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-400 focus:outline-none leading-relaxed"></textarea>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-600 mb-1">Lembrete Importante para as Famílias</label>
+              <input type="text" id="field-generalReminder" oninput="updateState('generalReminder', this.value)"
+                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-400 focus:outline-none">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PAINEL 2: EDIÇÃO DA SALA VERMELHA -->
+      <div id="editor-panel-vermelha" class="editor-section space-y-4 hidden">
+        <div class="bg-rose-50 border border-rose-200 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between border-b border-rose-200 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded-full bg-rose-500"></span>
+              <h2 class="font-title text-base text-rose-900 font-bold">Página da Sala Vermelha</h2>
+            </div>
+            <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-rose-200 text-rose-900">Página 2</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <label class="block font-bold text-rose-900 mb-1">Grupo / Idades</label>
+              <input type="text" id="field-roomRed-subtitle" oninput="updateRoomState('red', 'subtitle', this.value)"
+                class="w-full px-3 py-2 bg-white border border-rose-200 rounded-xl font-medium" placeholder="Ex: Grupo dos 3 Anos">
+            </div>
+            <div>
+              <label class="block font-bold text-rose-900 mb-1">Equipa da Sala</label>
+              <input type="text" id="field-roomRed-team" oninput="updateRoomState('red', 'team', this.value)"
+                class="w-full px-3 py-2 bg-white border border-rose-200 rounded-xl font-medium" placeholder="Ex: Educadora Ana & Auxiliar Carla">
+            </div>
+            <div class="col-span-2">
+              <label class="block font-bold text-rose-900 mb-1">Mensagem ou Projeto Destaque da Sala Vermelha</label>
+              <textarea id="field-roomRed-intro" rows="2" oninput="updateRoomState('red', 'intro', this.value)"
+                class="w-full px-3 py-2 bg-white border border-rose-200 rounded-xl leading-relaxed text-xs"></textarea>
+            </div>
+          </div>
+
+          <div class="pt-2 flex items-center justify-between border-t border-rose-200">
+            <h3 class="font-title text-xs font-bold text-rose-900">Atividades e Fotos da Sala Vermelha</h3>
+            <button onclick="addRoomActivity('red')" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl transition">
+              + Atividade Vermelha
+            </button>
+          </div>
+
+          <div id="roomRed-activities-form" class="space-y-3">
+            <!-- Gerado dinamicamente -->
+          </div>
+
+          <!-- Pérolas da Sala Vermelha -->
+          <div class="pt-2 border-t border-rose-200">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-title text-xs font-bold text-rose-900">Pérolas da Sala Vermelha</h3>
+              <button onclick="addRoomQuote('red')" class="px-2.5 py-1 bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs font-bold rounded-xl transition">
+                + Frase
+              </button>
+            </div>
+            <div id="roomRed-quotes-form" class="space-y-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAINEL 3: EDIÇÃO DA SALA VERDE -->
+      <div id="editor-panel-verde" class="editor-section space-y-4 hidden">
+        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded-full bg-emerald-500"></span>
+              <h2 class="font-title text-base text-emerald-900 font-bold">Página da Sala Verde</h2>
+            </div>
+            <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-900">Página 3</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <label class="block font-bold text-emerald-900 mb-1">Grupo / Idades</label>
+              <input type="text" id="field-roomGreen-subtitle" oninput="updateRoomState('green', 'subtitle', this.value)"
+                class="w-full px-3 py-2 bg-white border border-emerald-200 rounded-xl font-medium" placeholder="Ex: Grupo dos 4 Anos">
+            </div>
+            <div>
+              <label class="block font-bold text-emerald-900 mb-1">Equipa da Sala</label>
+              <input type="text" id="field-roomGreen-team" oninput="updateRoomState('green', 'team', this.value)"
+                class="w-full px-3 py-2 bg-white border border-emerald-200 rounded-xl font-medium" placeholder="Ex: Educadora Teresa & Auxiliar Paula">
+            </div>
+            <div class="col-span-2">
+              <label class="block font-bold text-emerald-900 mb-1">Mensagem ou Projeto Destaque da Sala Verde</label>
+              <textarea id="field-roomGreen-intro" rows="2" oninput="updateRoomState('green', 'intro', this.value)"
+                class="w-full px-3 py-2 bg-white border border-emerald-200 rounded-xl leading-relaxed text-xs"></textarea>
+            </div>
+          </div>
+
+          <div class="pt-2 flex items-center justify-between border-t border-emerald-200">
+            <h3 class="font-title text-xs font-bold text-emerald-900">Atividades e Fotos da Sala Verde</h3>
+            <button onclick="addRoomActivity('green')" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
+              + Atividade Verde
+            </button>
+          </div>
+
+          <div id="roomGreen-activities-form" class="space-y-3">
+            <!-- Gerado dinamicamente -->
+          </div>
+
+          <!-- Pérolas da Sala Verde -->
+          <div class="pt-2 border-t border-emerald-200">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-title text-xs font-bold text-emerald-900">Pérolas da Sala Verde</h3>
+              <button onclick="addRoomQuote('green')" class="px-2.5 py-1 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs font-bold rounded-xl transition">
+                + Frase
+              </button>
+            </div>
+            <div id="roomGreen-quotes-form" class="space-y-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAINEL 4: EDIÇÃO DA SALA AZUL -->
+      <div id="editor-panel-azul" class="editor-section space-y-4 hidden">
+        <div class="bg-sky-50 border border-sky-200 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between border-b border-sky-200 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded-full bg-sky-500"></span>
+              <h2 class="font-title text-base text-sky-900 font-bold">Página da Sala Azul</h2>
+            </div>
+            <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-sky-200 text-sky-900">Página 4</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <label class="block font-bold text-sky-900 mb-1">Grupo / Idades</label>
+              <input type="text" id="field-roomBlue-subtitle" oninput="updateRoomState('blue', 'subtitle', this.value)"
+                class="w-full px-3 py-2 bg-white border border-sky-200 rounded-xl font-medium" placeholder="Ex: Grupo dos 5 Anos (Finalistas)">
+            </div>
+            <div>
+              <label class="block font-bold text-sky-900 mb-1">Equipa da Sala</label>
+              <input type="text" id="field-roomBlue-team" oninput="updateRoomState('blue', 'team', this.value)"
+                class="w-full px-3 py-2 bg-white border border-sky-200 rounded-xl font-medium" placeholder="Ex: Educadora Cristina & Auxiliar Maria">
+            </div>
+            <div class="col-span-2">
+              <label class="block font-bold text-sky-900 mb-1">Mensagem ou Projeto Destaque da Sala Azul</label>
+              <textarea id="field-roomBlue-intro" rows="2" oninput="updateRoomState('blue', 'intro', this.value)"
+                class="w-full px-3 py-2 bg-white border border-sky-200 rounded-xl leading-relaxed text-xs"></textarea>
+            </div>
+          </div>
+
+          <div class="pt-2 flex items-center justify-between border-t border-sky-200">
+            <h3 class="font-title text-xs font-bold text-sky-900">Atividades e Fotos da Sala Azul</h3>
+            <button onclick="addRoomActivity('blue')" class="px-2.5 py-1 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold rounded-xl transition">
+              + Atividade Azul
+            </button>
+          </div>
+
+          <div id="roomBlue-activities-form" class="space-y-3">
+            <!-- Gerado dinamicamente -->
+          </div>
+
+          <!-- Pérolas da Sala Azul -->
+          <div class="pt-2 border-t border-sky-200">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-title text-xs font-bold text-sky-900">Pérolas da Sala Azul</h3>
+              <button onclick="addRoomQuote('blue')" class="px-2.5 py-1 bg-sky-100 hover:bg-sky-200 text-sky-800 text-xs font-bold rounded-xl transition">
+                + Frase
+              </button>
+            </div>
+            <div id="roomBlue-quotes-form" class="space-y-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAINEL DE EDIÇÃO DE PÁGINAS ADICIONAIS -->
+      <div id="editor-panel-extra" class="editor-section space-y-4 hidden">
+        <!-- Renderizado dinamicamente pelo JavaScript -->
+      </div>
+
+      <!-- Botões de Reposição e Limpeza -->
+      <div class="flex items-center justify-between text-xs text-slate-500 pt-2 px-1">
+        <button onclick="restoreSampleData()" class="hover:text-amber-800 font-semibold underline">Recarregar exemplo inicial das 4 salas</button>
+        <button onclick="clearAllData()" class="hover:text-rose-600 font-semibold underline">Limpar e começar do zero</button>
+      </div>
+
+    </section>
+
+    <!-- COLUNA 2: PRÉ-VISUALIZAÇÃO EM TEMPO REAL COM 4 PÁGINAS A4 -->
+    <section class="lg:col-span-7 flex flex-col items-center gap-8 print-area w-full">
+      
+      <!-- ================= PÁGINA 1: CAPA & GERAL ================= -->
+      <article id="page-capa" class="sheet-a4 preview-page w-full max-w-[210mm] bg-white min-h-[297mm] rounded-3xl shadow-xl border border-amber-200/90 p-6 sm:p-7 flex flex-col justify-between transition-all relative overflow-hidden">
+        
+        <!-- TOPO DA CAPA -->
+        <div>
+          <!-- Cabeçalho Institucional -->
+          <div class="border-b-2 border-slate-900 pb-2 mb-3 flex items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-sm shadow-xs">
+                JI
+              </div>
+              <div>
+                <span class="text-[9px] uppercase tracking-widest font-extrabold text-amber-800 block leading-none">Jardim de Infância</span>
+                <span class="font-bold text-slate-900 text-sm">Alexandre Rodrigues Ferreira</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span id="preview-monthYear" class="font-extrabold text-slate-900 text-xs uppercase tracking-wider block">Outubro 2026</span>
+              <span id="preview-edition" class="text-[10px] text-amber-800 font-bold bg-amber-100 px-2 py-0.5 rounded-full inline-block mt-0.5">Edição nº 1</span>
+            </div>
+          </div>
+
+          <!-- BANNER COM NOME PRINCIPAL E MASCOTE TRAQUINA ILUSTRADO -->
+          <div class="rounded-2xl p-4 sm:p-5 mb-4 bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200 text-slate-900 shadow-xs relative overflow-hidden border border-amber-300">
+            <div class="relative z-10 pr-24 sm:pr-28">
+              <div class="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-xs px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide text-amber-900 mb-1 shadow-2xs">
+                <span>🐿️ O Jornal das Nossas Crianças</span>
+                <span class="text-amber-400">&bull;</span>
+                <span class="text-amber-800">"As Traquinices"</span>
+              </div>
+              
+              <h1 id="preview-mainTitle" class="font-title text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-slate-950 leading-tight">
+                Traquinices &amp; Companhia
+              </h1>
+              
+              <p id="preview-slogan" class="text-xs sm:text-sm font-bold text-amber-950/90 mt-1 italic font-hand text-base">
+                "Pequenos traquinas, grandes notícias!"
+              </p>
+              
+              <p id="preview-subSlogan" class="text-[10px] sm:text-xs font-semibold text-slate-800/80 mt-0.5">
+                Feito por crianças, para quem gosta de sorrir.
+              </p>
+            </div>
+
+            <!-- ILUSTRAÇÃO SVG VIBRANTE DA MASCOTE "TRAQUINA" (Esquilo canela com bata de pintura e lápis gigante) -->
+            <div class="absolute right-2 -bottom-2 z-10 w-24 sm:w-28 pointer-events-none select-none">
+              <svg viewBox="0 0 200 220" class="w-full h-auto drop-shadow-md">
+                <!-- Cauda grande e fofa de esquilo -->
+                <path d="M120 180 C155 180, 185 140, 180 80 C175 30, 140 20, 125 35 C115 45, 120 65, 135 75 C155 88, 160 120, 130 145 C118 155, 110 160, 95 165 Z" fill="#b45309" />
+                <path d="M130 170 C160 165, 175 130, 170 85 C166 48, 142 38, 132 46 C124 53, 128 66, 140 76 C155 88, 155 115, 132 135 Z" fill="#d97706" />
+
+                <!-- Corpo / Tronco -->
+                <ellipse cx="90" cy="140" rx="35" ry="45" fill="#c2410c" />
+                
+                <!-- Bata de pintura escolar (branca/creme com salpicos de tinta colorida) -->
+                <path d="M60 125 C60 110, 120 110, 120 125 L125 175 C125 182, 55 182, 55 175 Z" fill="#fffbeb" stroke="#d97706" stroke-width="2" />
+                <!-- Salpicos de tinta na bata -->
+                <circle cx="75" cy="140" r="4" fill="#ef4444" />
+                <circle cx="88" cy="160" r="3.5" fill="#3b82f6" />
+                <circle cx="105" cy="145" r="4" fill="#10b981" />
+                <circle cx="70" cy="162" r="2" fill="#f59e0b" />
+                <circle cx="95" cy="132" r="2.5" fill="#8b5cf6" />
+
+                <!-- Cabeça do Traquina (Canela/Laranja aconchegante) -->
+                <ellipse cx="90" cy="85" rx="32" ry="30" fill="#d97706" />
+                
+                <!-- Orelhas pontiagudas -->
+                <path d="M68 62 L60 38 C60 38, 75 42, 78 56 Z" fill="#b45309" />
+                <path d="M66 58 L62 42 C62 42, 72 45, 75 55 Z" fill="#fbcfe8" />
+                <path d="M112 62 L120 38 C120 38, 105 42, 102 56 Z" fill="#b45309" />
+                <path d="M114 58 L118 42 C118 42, 108 45, 105 55 Z" fill="#fbcfe8" />
+
+                <!-- Focinho e Bochechas Coradas -->
+                <ellipse cx="90" cy="94" rx="20" ry="14" fill="#fef3c7" />
+                <!-- Bochechas coradas infantis -->
+                <circle cx="72" cy="94" r="5" fill="#f87171" opacity="0.6" />
+                <circle cx="108" cy="94" r="5" fill="#f87171" opacity="0.6" />
+                <!-- Narizinho -->
+                <ellipse cx="90" cy="88" rx="4" ry="3" fill="#451a03" />
+                <!-- Sorriso traquinas -->
+                <path d="M85 96 Q90 102 95 96" stroke="#451a03" stroke-width="2" fill="none" stroke-linecap="round" />
+                
+                <!-- Olhos grandes e vivos -->
+                <ellipse cx="78" cy="80" rx="4.5" ry="6" fill="#1e293b" />
+                <ellipse cx="102" cy="80" rx="4.5" ry="6" fill="#1e293b" />
+                <!-- Brilho dos olhos -->
+                <circle cx="76" cy="78" r="1.8" fill="#ffffff" />
+                <circle cx="100" cy="78" r="1.8" fill="#ffffff" />
+
+                <!-- LÁPIS GIGANTE que o Traquina segura -->
+                <g transform="rotate(-30 80 120)">
+                  <rect x="50" y="80" width="16" height="75" rx="3" fill="#f59e0b" stroke="#78350f" stroke-width="2"/>
+                  <polygon points="50,80 66,80 58,58" fill="#fde68a" stroke="#78350f" stroke-width="1.5" />
+                  <polygon points="55,65 61,65 58,58" fill="#451a03" />
+                  <!-- Borracha do lápis -->
+                  <rect x="50" y="150" width="16" height="10" rx="2" fill="#fb7185" stroke="#78350f" stroke-width="1.5" />
+                </g>
+
+                <!-- Patinhas a segurar o lápis -->
+                <ellipse cx="78" cy="128" rx="6" ry="5" fill="#b45309" />
+                <ellipse cx="104" cy="136" rx="6" ry="5" fill="#b45309" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- BALÃO DA FRASE DA MASCOTE "TRAQUINA" -->
+          <div class="mb-4 bg-amber-100/70 border-2 border-amber-300 rounded-2xl p-3 sm:p-3.5 flex items-start gap-3 relative shadow-2xs">
+            <div class="text-2xl select-none flex-shrink-0 bg-white w-9 h-9 rounded-xl flex items-center justify-center shadow-xs border border-amber-300">
+              🐿️
+            </div>
+            <div class="flex-1">
+              <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-900 block leading-tight">
+                Espiadinha do Traquina:
+              </span>
+              <p id="preview-mascotQuote" class="text-xs sm:text-sm font-bold text-amber-950 italic mt-0.5 leading-snug">
+                "Olá, traquinas! O Traquina andou por aí a espiar... e trouxe novidades!"
+              </p>
+            </div>
+          </div>
+
+          <!-- EDITORIAL DA ESCOLA / EQUIPA PEDAGÓGICA -->
+          <div id="preview-editorial-box" class="bg-amber-50/90 border-l-4 border-amber-500 rounded-r-2xl p-3 sm:p-4 mb-4">
+            <h3 id="preview-editorialTitle" class="font-title font-bold text-xs uppercase tracking-wider text-amber-950 mb-1 flex items-center gap-1.5">
+              <span>💌</span> Bem-vindos à Nossa Edição!
+            </h3>
+            <p id="preview-editorialText" class="text-xs text-slate-700 leading-relaxed italic">
+              É com grande alegria que apresentamos mais uma edição de "Traquinices & Companhia"! Neste mês repleto de curiosidade, os pequenos exploradores do JI Alexandre Rodrigues Ferreira viveram experiências enriquecedoras. Espreite as páginas seguintes para conhecer as aventuras das três salas!
+            </p>
+            <p id="preview-editorialSign" class="text-[11px] font-bold text-amber-900 text-right mt-1">
+              — A Equipa Pedagógica do JI Alexandre Rodrigues Ferreira
+            </p>
+          </div>
+
+          <!-- DESTAQUES GERAIS DA CAPA COM FOTOS -->
+          <div class="mb-4">
+            <div class="flex items-center gap-2 mb-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+              <h2 class="font-title text-sm sm:text-base font-bold text-slate-900 uppercase tracking-wide">
+                Destaques em Todo o Jardim de Infância
+              </h2>
+              <div class="flex-1 border-b border-dashed border-amber-300"></div>
+            </div>
+
+            <!-- Grelha de Destaques Gerais -->
+            <div id="preview-general-activities-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <!-- Cards dinâmicos -->
+            </div>
+          </div>
+
+          <!-- AGENDA GERAL & GUIA DE SALAS -->
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-3.5">
+            <!-- Agenda -->
+            <div class="sm:col-span-7 bg-slate-50 border border-slate-200/90 rounded-2xl p-3.5 flex flex-col justify-between">
+              <div>
+                <h3 class="font-title font-bold text-xs uppercase tracking-wider text-slate-800 flex items-center gap-1.5 mb-2">
+                  <span>📅</span> Próximas Datas &amp; Eventos Comuns
+                </h3>
+                <ul id="preview-general-agenda-list" class="text-xs text-slate-700 space-y-1.5 leading-tight">
+                  <!-- Gerado dinamicamente -->
+                </ul>
+              </div>
+              <div id="preview-general-reminder-box" class="mt-2.5 pt-2 border-t border-slate-200 text-xs">
+                <span class="text-[10px] font-bold text-amber-800 uppercase tracking-wider block">⚠️ Recado às Famílias:</span>
+                <p id="preview-general-reminder" class="text-[11px] text-slate-600 font-semibold leading-snug">
+                  Não esquecer de enviar a mochila devidamente identificada.
+                </p>
+              </div>
+            </div>
+
+            <!-- Sumário das Salas -->
+            <div class="sm:col-span-5 bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-3.5 flex flex-col justify-between">
+              <div>
+                <h3 class="font-title font-bold text-xs uppercase tracking-wider text-amber-900 flex items-center gap-1.5 mb-2">
+                  <span>🧭</span> Neste Número (Salas):
+                </h3>
+                <ul class="text-xs space-y-2 font-medium">
+                  <li class="flex items-center gap-2 text-rose-700">
+                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                    <span><strong>Pág. 2:</strong> Sala Vermelha</span>
+                  </li>
+                  <li class="flex items-center gap-2 text-emerald-700">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                    <span><strong>Pág. 3:</strong> Sala Verde</span>
+                  </li>
+                  <li class="flex items-center gap-2 text-sky-700">
+                    <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+                    <span><strong>Pág. 4:</strong> Sala Azul</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="mt-2 pt-2 border-t border-amber-200/80 text-[10px] text-amber-800 italic text-center">
+                Vire a página para ver os trabalhos dos meninos!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RODAPÉ DA PÁGINA 1 -->
+        <footer class="pt-3 border-t-2 border-slate-900 mt-4 flex justify-between items-center text-[10px] text-slate-500 font-semibold">
+          <span>Traquinices &amp; Companhia &bull; JI Alexandre Rodrigues Ferreira</span>
+          <span id="footer-page-1">Página 1 de 4</span>
+        </footer>
+      </article>
+
+      <!-- ================= PÁGINA 2: SALA VERMELHA ================= -->
+      <article id="page-vermelha" class="sheet-a4 preview-page w-full max-w-[210mm] bg-white min-h-[297mm] rounded-3xl shadow-xl border border-rose-200 p-6 sm:p-7 flex flex-col justify-between transition-all relative overflow-hidden">
+        
+        <div>
+          <!-- Cabeçalho Sala Vermelha -->
+          <div class="border-b-2 border-rose-800 pb-2 mb-3 flex items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-rose-500 text-white flex items-center justify-center font-bold text-xs">
+                🔴
+              </span>
+              <div>
+                <span class="text-[9px] uppercase tracking-widest font-extrabold text-rose-700 block leading-none">Jornal Traquinices &amp; Companhia</span>
+                <span class="font-bold text-rose-950 text-sm">JI Alexandre Rodrigues Ferreira</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-extrabold text-rose-900 text-xs uppercase tracking-wider block">SALA VERMELHA</span>
+              <span id="preview-roomRed-subtitle" class="text-[10px] text-rose-700 font-bold">Grupo dos 3 Anos</span>
+            </div>
+          </div>
+
+          <!-- Banner da Sala Vermelha -->
+          <div class="rounded-2xl p-4 sm:p-4 mb-4 bg-gradient-to-r from-rose-500 via-rose-400 to-pink-300 text-white shadow-xs flex items-center justify-between">
+            <div>
+              <div class="inline-block bg-white/90 backdrop-blur-xs px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide text-rose-900 mb-1">
+                Caderno das Nossas Salas
+              </div>
+              <h2 class="font-title text-2xl sm:text-3xl font-bold tracking-tight text-white leading-tight">
+                Notícias da Sala Vermelha 🎈
+              </h2>
+              <p id="preview-roomRed-team" class="text-xs font-semibold text-rose-100 mt-0.5">
+                Equipa Pedagógica: Educadora e Assistentes
+              </p>
+            </div>
+            <div class="text-3xl pr-2 select-none">
+              🍎🎨🖍️
+            </div>
+          </div>
+
+          <!-- Mensagem / Projeto da Sala Vermelha -->
+          <div class="bg-rose-50 border-l-4 border-rose-500 rounded-r-2xl p-3 sm:p-3.5 mb-4 text-xs text-rose-950">
+            <span class="font-title font-bold text-rose-900 block uppercase tracking-wider text-[11px] mb-1">
+              ❤️ O Nosso Olhar Este Mês:
+            </span>
+            <p id="preview-roomRed-intro" class="italic leading-relaxed">
+              Na Sala Vermelha, as mãozinhas estiveram ocupadas com muitas tintas, texturas e novas amizades. Cada dia é uma descoberta fascinante!
+            </p>
+          </div>
+
+          <!-- Atividades da Sala Vermelha -->
+          <div class="mb-4">
+            <div class="flex items-center gap-2 mb-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+              <h3 class="font-title text-sm sm:text-base font-bold text-slate-900 uppercase tracking-wide">
+                Atividades &amp; Vivências da Sala Vermelha
+              </h3>
+              <div class="flex-1 border-b border-dashed border-rose-300"></div>
+            </div>
+
+            <div id="preview-roomRed-activities-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <!-- Atividades da Sala Vermelha -->
+            </div>
+          </div>
+
+          <!-- Pérolas da Sala Vermelha -->
+          <div class="bg-rose-50/80 border border-rose-200 rounded-2xl p-3.5">
+            <h4 class="font-title font-bold text-xs uppercase tracking-wider text-rose-900 flex items-center gap-1.5 mb-2">
+              <span>💬</span> Pérolas dos Pequenos Traquinas da Sala Vermelha
+            </h4>
+            <div id="preview-roomRed-quotes-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <!-- Pérolas -->
+            </div>
+          </div>
+        </div>
+
+        <!-- RODAPÉ DA PÁGINA 2 -->
+        <footer class="pt-3 border-t-2 border-rose-800 mt-4 flex justify-between items-center text-[10px] text-slate-500 font-semibold">
+          <span>Traquinices &amp; Companhia &bull; Sala Vermelha</span>
+          <span id="footer-page-2">Página 2 de 4</span>
+        </footer>
+      </article>
+
+      <!-- ================= PÁGINA 3: SALA VERDE ================= -->
+      <article id="page-verde" class="sheet-a4 preview-page w-full max-w-[210mm] bg-white min-h-[297mm] rounded-3xl shadow-xl border border-emerald-200 p-6 sm:p-7 flex flex-col justify-between transition-all relative overflow-hidden">
+        
+        <div>
+          <!-- Cabeçalho Sala Verde -->
+          <div class="border-b-2 border-emerald-800 pb-2 mb-3 flex items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-xs">
+                🟢
+              </span>
+              <div>
+                <span class="text-[9px] uppercase tracking-widest font-extrabold text-emerald-800 block leading-none">Jornal Traquinices &amp; Companhia</span>
+                <span class="font-bold text-emerald-950 text-sm">JI Alexandre Rodrigues Ferreira</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-extrabold text-emerald-900 text-xs uppercase tracking-wider block">SALA VERDE</span>
+              <span id="preview-roomGreen-subtitle" class="text-[10px] text-emerald-700 font-bold">Grupo dos 4 Anos</span>
+            </div>
+          </div>
+
+          <!-- Banner da Sala Verde -->
+          <div class="rounded-2xl p-4 sm:p-4 mb-4 bg-gradient-to-r from-emerald-500 via-teal-400 to-lime-300 text-white shadow-xs flex items-center justify-between">
+            <div>
+              <div class="inline-block bg-white/90 backdrop-blur-xs px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide text-emerald-900 mb-1">
+                Caderno das Nossas Salas
+              </div>
+              <h2 class="font-title text-2xl sm:text-3xl font-bold tracking-tight text-white leading-tight">
+                Notícias da Sala Verde 🌱
+              </h2>
+              <p id="preview-roomGreen-team" class="text-xs font-semibold text-emerald-100 mt-0.5">
+                Equipa Pedagógica: Educadora e Assistentes
+              </p>
+            </div>
+            <div class="text-3xl pr-2 select-none">
+              🌿🐸🌻
+            </div>
+          </div>
+
+          <!-- Mensagem / Projeto da Sala Verde -->
+          <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-r-2xl p-3 sm:p-3.5 mb-4 text-xs text-emerald-950">
+            <span class="font-title font-bold text-emerald-900 block uppercase tracking-wider text-[11px] mb-1">
+              🌱 O Nosso Olhar Este Mês:
+            </span>
+            <p id="preview-roomGreen-intro" class="italic leading-relaxed">
+              Na Sala Verde a natureza e a imaginação andaram de mãos dadas! Explorámos plantas, misturámos cores e fizemos construções maravilhosas.
+            </p>
+          </div>
+
+          <!-- Atividades da Sala Verde -->
+          <div class="mb-4">
+            <div class="flex items-center gap-2 mb-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <h3 class="font-title text-sm sm:text-base font-bold text-slate-900 uppercase tracking-wide">
+                Atividades &amp; Vivências da Sala Verde
+              </h3>
+              <div class="flex-1 border-b border-dashed border-emerald-300"></div>
+            </div>
+
+            <div id="preview-roomGreen-activities-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <!-- Atividades da Sala Verde -->
+            </div>
+          </div>
+
+          <!-- Pérolas da Sala Verde -->
+          <div class="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-3.5">
+            <h4 class="font-title font-bold text-xs uppercase tracking-wider text-emerald-900 flex items-center gap-1.5 mb-2">
+              <span>💬</span> Pérolas dos Pequenos Traquinas da Sala Verde
+            </h4>
+            <div id="preview-roomGreen-quotes-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <!-- Pérolas -->
+            </div>
+          </div>
+        </div>
+
+        <!-- RODAPÉ DA PÁGINA 3 -->
+        <footer class="pt-3 border-t-2 border-emerald-800 mt-4 flex justify-between items-center text-[10px] text-slate-500 font-semibold">
+          <span>Traquinices &amp; Companhia &bull; Sala Verde</span>
+          <span id="footer-page-3">Página 3 de 4</span>
+        </footer>
+      </article>
+
+      <!-- ================= PÁGINA 4: SALA AZUL ================= -->
+      <article id="page-azul" class="sheet-a4 preview-page w-full max-w-[210mm] bg-white min-h-[297mm] rounded-3xl shadow-xl border border-sky-200 p-6 sm:p-7 flex flex-col justify-between transition-all relative overflow-hidden">
+        
+        <div>
+          <!-- Cabeçalho Sala Azul -->
+          <div class="border-b-2 border-sky-800 pb-2 mb-3 flex items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-sky-500 text-white flex items-center justify-center font-bold text-xs">
+                🔵
+              </span>
+              <div>
+                <span class="text-[9px] uppercase tracking-widest font-extrabold text-sky-800 block leading-none">Jornal Traquinices &amp; Companhia</span>
+                <span class="font-bold text-sky-950 text-sm">JI Alexandre Rodrigues Ferreira</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-extrabold text-sky-900 text-xs uppercase tracking-wider block">SALA AZUL</span>
+              <span id="preview-roomBlue-subtitle" class="text-[10px] text-sky-700 font-bold">Grupo dos 5 Anos</span>
+            </div>
+          </div>
+
+          <!-- Banner da Sala Azul -->
+          <div class="rounded-2xl p-4 sm:p-4 mb-4 bg-gradient-to-r from-sky-500 via-blue-400 to-indigo-300 text-white shadow-xs flex items-center justify-between">
+            <div>
+              <div class="inline-block bg-white/90 backdrop-blur-xs px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide text-sky-900 mb-1">
+                Caderno das Nossas Salas
+              </div>
+              <h2 class="font-title text-2xl sm:text-3xl font-bold tracking-tight text-white leading-tight">
+                Notícias da Sala Azul 🚀
+              </h2>
+              <p id="preview-roomBlue-team" class="text-xs font-semibold text-sky-100 mt-0.5">
+                Equipa Pedagógica: Educadora e Assistentes
+              </p>
+            </div>
+            <div class="text-3xl pr-2 select-none">
+              🌊🔭✈️
+            </div>
+          </div>
+
+          <!-- Mensagem / Projeto da Sala Azul -->
+          <div class="bg-sky-50 border-l-4 border-sky-500 rounded-r-2xl p-3 sm:p-3.5 mb-4 text-xs text-sky-950">
+            <span class="font-title font-bold text-sky-900 block uppercase tracking-wider text-[11px] mb-1">
+              🔹 O Nosso Olhar Este Mês:
+            </span>
+            <p id="preview-roomBlue-intro" class="italic leading-relaxed">
+              Os nossos quase-escolares da Sala Azul estiveram focados em experiências científicas, histórias inventadas e grandes projetos em grupo!
+            </p>
+          </div>
+
+          <!-- Atividades da Sala Azul -->
+          <div class="mb-4">
+            <div class="flex items-center gap-2 mb-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+              <h3 class="font-title text-sm sm:text-base font-bold text-slate-900 uppercase tracking-wide">
+                Atividades &amp; Vivências da Sala Azul
+              </h3>
+              <div class="flex-1 border-b border-dashed border-sky-300"></div>
+            </div>
+
+            <div id="preview-roomBlue-activities-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <!-- Atividades da Sala Azul -->
+            </div>
+          </div>
+
+          <!-- Pérolas da Sala Azul -->
+          <div class="bg-sky-50/80 border border-sky-200 rounded-2xl p-3.5">
+            <h4 class="font-title font-bold text-xs uppercase tracking-wider text-sky-900 flex items-center gap-1.5 mb-2">
+              <span>💬</span> Pérolas dos Pequenos Traquinas da Sala Azul
+            </h4>
+            <div id="preview-roomBlue-quotes-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <!-- Pérolas -->
+            </div>
+          </div>
+        </div>
+
+        <!-- RODAPÉ DA PÁGINA 4 -->
+        <footer class="pt-3 border-t-2 border-sky-800 mt-4 flex justify-between items-center text-[10px] text-slate-500 font-semibold">
+          <span>Traquinices &amp; Companhia &bull; Sala Azul</span>
+          <span id="footer-page-4">Página 4 de 4</span>
+        </footer>
+      </article>
+
+      <!-- CONTENTOR DAS PÁGINAS ADICIONADAS PELO UTILIZADOR -->
+      <div id="extra-pages-preview-container" class="w-full flex flex-col items-center gap-8">
+        <!-- Páginas extras renderizadas dinamicamente aqui -->
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    // Estrutura de dados inicial completa para o Traquinices & Companhia com as 3 salas
+    const initialDefaultData = {
+      mainTitle: "Traquinices & Companhia",
+      monthYear: "Outubro 2026",
+      edition: "Ano Letivo 2026/27 • Nº 1",
+      slogan: "Pequenos traquinas, grandes notícias!",
+      subSlogan: "Feito por crianças, para quem gosta de sorrir.",
+      mascotQuote: "Olá, traquinas! O Traquina andou por aí a espiar... e trouxe novidades!",
+      editorialTitle: "Bem-vindos a Mais uma Aventura!",
+      editorialText: "O outono chegou cheio de cores e alegria ao nosso JI Alexandre Rodrigues Ferreira. As nossas crianças exploraram o recreio, partilharam abraços e construíram novas memórias com muita curiosidade. Esta edição é o espelho desse carinho e traquinice!",
+      editorialSign: "A Equipa Pedagógica e Assistentes Operacionais",
+      generalAgenda: "16 Outubro: Comemoração do Magusto na Escola\n24 Outubro: Atividade na Biblioteca Escolar\n31 Outubro: Dia das Fantasias e Brincadeiras",
+      generalReminder: "Com o tempo mais fresco, por favor identifiquem casacos e galochas com o nome da criança.",
+      generalActivities: [
+        {
+          id: 101,
+          tag: "Comunidade Escolar",
+          title: "A Colheita das Folhas de Outono",
+          text: "Todas as salas juntaram-se no pátio para recolher folhas douradas, castanhas e pequenos gravetos para os nossos murais de boas-vindas.",
+          imageUrl: "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?w=600&auto=format&fit=crop&q=80"
+        },
+        {
+          id: 102,
+          tag: "Tradição & Partilha",
+          title: "Festa do Pão e da Fruta",
+          text: "Observámos diferentes tipos de frutos da época e partilhámos um lanche saudável preparado com a ajuda e carinho de todos os meninos.",
+          imageUrl: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80"
+        }
+      ],
+      rooms: {
+        red: {
+          subtitle: "Grupo dos 3 Anos (Sala Vermelha)",
+          team: "Educadora Teresa & Auxiliar Carla",
+          intro: "Na Sala Vermelha, as crianças viveram os seus primeiros grandes momentos no jardim de infância com muito afeto, canções e mãos cheias de tinta!",
+          activities: [
+            {
+              id: 201,
+              tag: "Expressão Plástica",
+              title: "Pintura com Dedos e Esponjas",
+              text: "Experimentámos tintas com cheirinhos e fizemos carimbos com as nossas mãos para criar a nossa árvore coletiva da sala.",
+              imageUrl: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&auto=format&fit=crop&q=80"
+            },
+            {
+              id: 202,
+              tag: "Sensorial & Música",
+              title: "A Roda dos Sons e Cantigas",
+              text: "Aprendemos canções novas com gestos e descobrimos instrumentos de percussão suaves que acalmam o nosso coração.",
+              imageUrl: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&auto=format&fit=crop&q=80"
+            }
+          ],
+          quotes: [
+            { id: 2001, author: "Martim, 3 anos", text: "Olha educadora, a minha mão é uma estrela do mar que viaja na folha!" },
+            { id: 2002, author: "Leonor, 3 anos", text: "O Traquina come nozes como o esquilo da nossa história?" }
+          ]
+        },
+        green: {
+          subtitle: "Grupo dos 4 Anos (Sala Verde)",
+          team: "Educadora Sofia & Auxiliar Paula",
+          intro: "Na Sala Verde a exploração da natureza esteve em pleno! Investigámos pequenos bichinhos, cuidámos do canteiro e inventámos histórias sem fim.",
+          activities: [
+            {
+              id: 301,
+              tag: "Ciência & Natureza",
+              title: "Lupas na Mão à Procura de Formigas",
+              text: "Equipados com lupas como o esquilo Traquina, fomos espreitar a relva e descobrimos caracóis e folhas com desenhos curiosos.",
+              imageUrl: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=600&auto=format&fit=crop&q=80"
+            },
+            {
+              id: 302,
+              tag: "Construções Coletivas",
+              title: "Castelos de Madeira e Cartão",
+              text: "Usámos blocos de madeira e caixas recicladas para desenhar pontes, túneis e garagens para os nossos carrinhos.",
+              imageUrl: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=600&auto=format&fit=crop&q=80"
+            }
+          ],
+          quotes: [
+            { id: 3001, author: "Dinis, 4 anos", text: "As árvores estão a tirar a camisola de folhas para irem dormir no inverno." },
+            { id: 3002, author: "Carolina, 4 anos", text: "Educadora, se regarmos a semente com amor ela cresce mais depressa!" }
+          ]
+        },
+        blue: {
+          subtitle: "Grupo dos 5 Anos (Sala Azul)",
+          team: "Educadora Helena & Auxiliar Rosa",
+          intro: "Os grandes finalistas da Sala Azul estão cada vez mais autónomos! Exploraram letras, números, receitas deliciosas e mapas do mundo.",
+          activities: [
+            {
+              id: 401,
+              tag: "Cidadania & Escrita",
+              title: "O Livro dos Nossos Nomes e Desejos",
+              text: "Cada criança desenhou o seu autorretrato e escreveu o seu nome com letras recortadas de jornais antigos.",
+              imageUrl: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&auto=format&fit=crop&q=80"
+            },
+            {
+              id: 402,
+              tag: "Experiências e Culinária",
+              title: "O Vulcão de Cores e as Bolachas",
+              text: "Misturámos bicarbonato com vinagre colorido e vimos a magia a acontecer na bancada da nossa sala de experiências.",
+              imageUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80"
+            }
+          ],
+          quotes: [
+            { id: 4001, author: "Tomás, 5 anos", text: "Eu já sei escrever o meu nome sem espreitar para a mesa!" },
+            { id: 4002, author: "Beatriz, 5 anos", text: "O esquilo Traquina devia ter uma mochila igual à minha para guardar segredos." }
+          ]
+        }
+      },
+      extraPages: []
+    };
+
+    let state = {};
+    let currentTab = 'capa'; // 'capa', 'vermelha', 'verde', 'azul', 'todas', ou 'extra-{id}'
+
+    function initApp() {
+      try {
+        const saved = localStorage.getItem('traquinices_ji_newspaper');
+        if (saved) {
+          state = JSON.parse(saved);
+          if (!state.extraPages) state.extraPages = [];
+        } else {
+          state = JSON.parse(JSON.stringify(initialDefaultData));
+        }
+      } catch (e) {
+        state = JSON.parse(JSON.stringify(initialDefaultData));
+      }
+
+      fillAllInputs();
+      renderAllForms();
+      renderAllPreview();
+      switchTab('capa');
+    }
+
+    function autoSave() {
+      try {
+        localStorage.setItem('traquinices_ji_newspaper', JSON.stringify(state));
+      } catch (e) {
+        console.warn("Storage quota exceeded", e);
+      }
+    }
+
+    function saveManual() {
+      autoSave();
+      showToastNotification("Rascunho de todas as 4 páginas guardado no computador!");
+    }
+
+    function fillAllInputs() {
+      // Campos Capa
+      document.getElementById('field-mainTitle').value = state.mainTitle || '';
+      document.getElementById('field-monthYear').value = state.monthYear || '';
+      document.getElementById('field-edition').value = state.edition || '';
+      document.getElementById('field-slogan').value = state.slogan || '';
+      document.getElementById('field-subSlogan').value = state.subSlogan || '';
+      document.getElementById('field-mascotQuote').value = state.mascotQuote || '';
+      document.getElementById('field-editorialTitle').value = state.editorialTitle || '';
+      document.getElementById('field-editorialText').value = state.editorialText || '';
+      document.getElementById('field-editorialSign').value = state.editorialSign || '';
+      document.getElementById('field-generalAgenda').value = state.generalAgenda || '';
+      document.getElementById('field-generalReminder').value = state.generalReminder || '';
+
+      // Sincronizar select do slogan se coincidir
+      const sloganSelect = document.getElementById('select-slogan');
+      if (sloganSelect) {
+        const options = Array.from(sloganSelect.options).map(o => o.value);
+        if (options.includes(state.slogan)) {
+          sloganSelect.value = state.slogan;
+        }
+      }
+
+      // Campos Sala Vermelha
+      document.getElementById('field-roomRed-subtitle').value = state.rooms.red.subtitle || '';
+      document.getElementById('field-roomRed-team').value = state.rooms.red.team || '';
+      document.getElementById('field-roomRed-intro').value = state.rooms.red.intro || '';
+
+      // Campos Sala Verde
+      document.getElementById('field-roomGreen-subtitle').value = state.rooms.green.subtitle || '';
+      document.getElementById('field-roomGreen-team').value = state.rooms.green.team || '';
+      document.getElementById('field-roomGreen-intro').value = state.rooms.green.intro || '';
+
+      // Campos Sala Azul
+      document.getElementById('field-roomBlue-subtitle').value = state.rooms.blue.subtitle || '';
+      document.getElementById('field-roomBlue-team').value = state.rooms.blue.team || '';
+      document.getElementById('field-roomBlue-intro').value = state.rooms.blue.intro || '';
+    }
+
+    function updateState(key, val) {
+      state[key] = val;
+      renderAllPreview();
+      autoSave();
+    }
+
+    function updateRoomState(roomKey, field, val) {
+      if (state.rooms && state.rooms[roomKey]) {
+        state.rooms[roomKey][field] = val;
+        renderRoomPreview(roomKey);
+        autoSave();
+      }
+    }
+
+    function applySloganChoice(val) {
+      document.getElementById('field-slogan').value = val;
+      updateState('slogan', val);
+    }
+
+    // Alternar abas no editor e no preview da tela
+    function switchTab(tab) {
+      currentTab = tab;
+
+      // Atualizar botões no topo
+      const staticTabs = ['capa', 'vermelha', 'verde', 'azul', 'todas'];
+      staticTabs.forEach(t => {
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (!btn) return;
+        if (t === tab) {
+          btn.className = "tab-button px-3 py-1.5 rounded-lg font-bold bg-amber-500 text-white shadow-xs transition flex items-center gap-1.5";
+        } else {
+          btn.className = "tab-button px-3 py-1.5 rounded-lg font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5";
+        }
+      });
+
+      // Atualizar botões de abas extras no cabeçalho
+      if (state.extraPages) {
+        state.extraPages.forEach(p => {
+          const eBtn = document.getElementById(`tab-btn-extra-${p.id}`);
+          if (!eBtn) return;
+          if (`extra-${p.id}` === tab) {
+            eBtn.className = "tab-button px-3 py-1.5 rounded-lg font-bold bg-purple-600 text-white shadow-xs transition flex items-center gap-1.5";
+          } else {
+            eBtn.className = "tab-button px-3 py-1.5 rounded-lg font-bold bg-white text-purple-700 hover:bg-purple-50 border border-purple-200 transition flex items-center gap-1.5";
+          }
+        });
+      }
+
+      // Atualizar botões de formulário da esquerda
+      const formTabs = ['capa', 'vermelha', 'verde', 'azul'];
+      formTabs.forEach(ft => {
+        const fbtn = document.getElementById(`form-tab-${ft}`);
+        const panel = document.getElementById(`editor-panel-${ft}`);
+        const activeTarget = (tab === 'todas') ? 'capa' : tab;
+        
+        if (ft === activeTarget) {
+          if (fbtn) fbtn.className = "px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-500 text-white transition";
+          if (panel) panel.classList.remove('hidden');
+        } else {
+          if (fbtn) fbtn.className = "px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition";
+          if (panel) panel.classList.add('hidden');
+        }
+      });
+
+      // Painel de edição da página extra (se for aba extra)
+      const extraPanel = document.getElementById('editor-panel-extra');
+      if (tab.startsWith('extra-')) {
+        const extraId = parseInt(tab.replace('extra-', ''));
+        renderExtraPageEditor(extraId);
+        extraPanel.classList.remove('hidden');
+        // Desativar formulários padrão
+        formTabs.forEach(ft => {
+          const panel = document.getElementById(`editor-panel-${ft}`);
+          if (panel) panel.classList.add('hidden');
+        });
+      } else {
+        extraPanel.classList.add('hidden');
+      }
+
+      // Atualizar botões de abas no formulário da esquerda para páginas extras
+      if (state.extraPages) {
+        state.extraPages.forEach(p => {
+          const feBtn = document.getElementById(`form-tab-extra-${p.id}`);
+          if (!feBtn) return;
+          if (`extra-${p.id}` === tab) {
+            feBtn.className = "px-2.5 py-1 text-xs font-bold rounded-lg bg-purple-600 text-white transition";
+          } else {
+            feBtn.className = "px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 text-purple-700 hover:bg-purple-50 transition";
+          }
+        });
+      }
+
+      // Visibilidade das páginas na pré-visualização (fora de impressão)
+      const staticPages = {
+        capa: document.getElementById('page-capa'),
+        vermelha: document.getElementById('page-vermelha'),
+        verde: document.getElementById('page-verde'),
+        azul: document.getElementById('page-azul')
+      };
+
+      if (tab === 'todas') {
+        Object.values(staticPages).forEach(p => p && p.classList.remove('hidden'));
+        if (state.extraPages) {
+          state.extraPages.forEach(p => {
+            const el = document.getElementById(`page-extra-${p.id}`);
+            if (el) el.classList.remove('hidden');
+          });
+        }
+      } else if (tab.startsWith('extra-')) {
+        Object.values(staticPages).forEach(p => p && p.classList.add('hidden'));
+        if (state.extraPages) {
+          state.extraPages.forEach(p => {
+            const el = document.getElementById(`page-extra-${p.id}`);
+            if (el) {
+              if (`extra-${p.id}` === tab) {
+                el.classList.remove('hidden');
+              } else {
+                el.classList.add('hidden');
+              }
+            }
+          });
+        }
+      } else {
+        Object.keys(staticPages).forEach(k => {
+          if (k === tab) {
+            staticPages[k] && staticPages[k].classList.remove('hidden');
+          } else {
+            staticPages[k] && staticPages[k].classList.add('hidden');
+          }
+        });
+        if (state.extraPages) {
+          state.extraPages.forEach(p => {
+            const el = document.getElementById(`page-extra-${p.id}`);
+            if (el) el.classList.add('hidden');
+          });
+        }
+      }
+    }
+
+    // Gerir páginas adicionais
+    const themeColors = {
+      purple: {
+        name: "Roxo / Violeta",
+        dot: "bg-purple-500",
+        bgLight: "purple-100",
+        textDark: "purple-900",
+        border: "purple",
+        gradient: "from-purple-500 via-violet-400 to-fuchsia-300",
+        cardBg: "bg-purple-50",
+        borderColor: "border-purple-200",
+        headerBorder: "border-purple-800"
+      },
+      orange: {
+        name: "Laranja Sol",
+        dot: "bg-orange-500",
+        bgLight: "orange-100",
+        textDark: "orange-900",
+        border: "orange",
+        gradient: "from-orange-500 via-amber-400 to-yellow-300",
+        cardBg: "bg-orange-50",
+        borderColor: "border-orange-200",
+        headerBorder: "border-orange-800"
+      },
+      teal: {
+        name: "Turquesa",
+        dot: "bg-teal-500",
+        bgLight: "teal-100",
+        textDark: "teal-900",
+        border: "teal",
+        gradient: "from-teal-500 via-cyan-400 to-emerald-300",
+        cardBg: "bg-teal-50",
+        borderColor: "border-teal-200",
+        headerBorder: "border-teal-800"
+      },
+      pink: {
+        name: "Rosa Fúcsia",
+        dot: "bg-pink-500",
+        bgLight: "pink-100",
+        textDark: "pink-900",
+        border: "pink",
+        gradient: "from-pink-500 via-rose-400 to-amber-200",
+        cardBg: "bg-pink-50",
+        borderColor: "border-pink-200",
+        headerBorder: "border-pink-800"
+      }
+    };
+
+    function addNewExtraPage() {
+      if (!state.extraPages) state.extraPages = [];
+      const newPageId = Date.now();
+      const pageIndex = state.extraPages.length + 1;
+      const colorKeys = Object.keys(themeColors);
+      const chosenColor = colorKeys[(pageIndex - 1) % colorKeys.length];
+
+      const newPage = {
+        id: newPageId,
+        title: `Página Adicional ${pageIndex}`,
+        color: chosenColor,
+        emoji: "🎨",
+        subtitle: `Atividades & Projetos Especiais`,
+        team: "Equipa Pedagógica",
+        intro: "Uma página dedicada a mais vivências, projetos criativos e registos especiais do nosso jardim de infância.",
+        activities: [
+          {
+            id: Date.now() + 1,
+            tag: "Projeto & Criação",
+            title: "Nova Atividade da Página",
+            text: "Descreva aqui as experiências vividas pelas crianças, os materiais explorados e os sorrisos partilhados...",
+            imageUrl: ""
+          }
+        ],
+        quotes: [
+          {
+            id: Date.now() + 2,
+            author: "Criança, 4 anos",
+            text: "A nossa escola tem tantas histórias bonitas para contar!"
+          }
+        ]
+      };
+
+      state.extraPages.push(newPage);
+      renderExtraTabs();
+      renderAllPreview();
+      autoSave();
+      switchTab(`extra-${newPageId}`);
+      showToastNotification("Nova página adicionada ao jornal!");
+    }
+
+    function removeExtraPage(id) {
+      if (!confirm("Tem a certeza de que deseja remover esta página?")) return;
+      state.extraPages = state.extraPages.filter(p => p.id !== id);
+      renderExtraTabs();
+      renderAllPreview();
+      autoSave();
+      switchTab('capa');
+      showToastNotification("Página removida com sucesso.");
+    }
+
+    function updateExtraPageField(id, field, val) {
+      const page = state.extraPages.find(p => p.id === id);
+      if (page) {
+        page[field] = val;
+        renderExtraPagesPreview(4 + state.extraPages.length);
+        if (field === 'title') {
+          renderExtraTabs();
+        }
+        autoSave();
+      }
+    }
+
+    function addExtraPageActivity(pageId) {
+      const page = state.extraPages.find(p => p.id === pageId);
+      if (page) {
+        page.activities.push({
+          id: Date.now(),
+          tag: "Vivências da Escola",
+          title: "Nova Notícia",
+          text: "Descreva a atividade, as descobertas e as aprendizagens dos meninos...",
+          imageUrl: ""
+        });
+        renderExtraPageEditor(pageId);
+        renderExtraPagesPreview(4 + state.extraPages.length);
+        autoSave();
+      }
+    }
+
+    function removeExtraPageActivity(pageId, actId) {
+      const page = state.extraPages.find(p => p.id === pageId);
+      if (page) {
+        page.activities = page.activities.filter(a => a.id !== actId);
+        renderExtraPageEditor(pageId);
+        renderExtraPagesPreview(4 + state.extraPages.length);
+        autoSave();
+      }
+    }
+
+    function updateExtraPageActField(pageId, actId, field, val) {
+      const page = state.extraPages.find(p => p.id === pageId);
+      if (page) {
+        const act = page.activities.find(a => a.id === actId);
+        if (act) {
+          act[field] = val;
+          renderExtraPagesPreview(4 + state.extraPages.length);
+          autoSave();
+        }
+      }
+    }
+
+    function uploadExtraPagePhoto(event, pageId, actId) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const page = state.extraPages.find(p => p.id === pageId);
+        if (page) {
+          const act = page.activities.find(a => a.id === actId);
+          if (act) {
+            act.imageUrl = e.target.result;
+            renderExtraPageEditor(pageId);
+            renderExtraPagesPreview(4 + state.extraPages.length);
+            autoSave();
+            showToastNotification("Fotografia adicionada!");
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function promptPhotoUrlExtra(pageId, actId) {
+      const url = prompt("Cole o endereço web da imagem (URL):");
+      if (url && url.trim().length > 0) {
+        const page = state.extraPages.find(p => p.id === pageId);
+        if (page) {
+          const act = page.activities.find(a => a.id === actId);
+          if (act) {
+            act.imageUrl = url.trim();
+            renderExtraPageEditor(pageId);
+            renderExtraPagesPreview(4 + state.extraPages.length);
+            autoSave();
+            showToastNotification("Fotografia adicionada!");
+          }
+        }
+      }
+    }
+
+    function removeExtraPagePhoto(pageId, actId) {
+      const page = state.extraPages.find(p => p.id === pageId);
+      if (page) {
+        const act = page.activities.find(a => a.id === actId);
+        if (act) {
+          act.imageUrl = "";
+          renderExtraPageEditor(pageId);
+          renderExtraPagesPreview(4 + state.extraPages.length);
+          autoSave();
+          showToastNotification("Fotografia removida.");
+        }
+      }
+    }
+
+    function addExtraPageQuote(pageId) {
+      const page = state.extraPages.find(p => p.id === pageId);
+      if (page) {
+        page.quotes.push({
+          id: Date.now(),
+          author: "Criança, anos",
+          text: "Frase dita pela criança..."
+        });
+        renderExtraPageEditor(pageId);
+        renderExtraPagesPreview(4 + state.extraPages.length);
+        autoSave();
+      }
+    }
+
+    function removeExtraPageQuote(pageId, quoteId) {
+      const page = state.extraPages.find(p => p.id === pageId);
+      if (page) {
+        page.quotes = page.quotes.filter(q => q.id !== quoteId);
+        renderExtraPageEditor(pageId);
+        renderExtraPagesPreview(4 + state.extraPages.length);
+        autoSave();
+      }
+    }
+
+    function updateExtraPageQuoteField(pageId, quoteId, field, val) {
+      const page = state.extraPages.find(p => p.id === pageId);
+      if (page) {
+        const q = page.quotes.find(item => item.id === quoteId);
+        if (q) {
+          q[field] = val;
+          renderExtraPagesPreview(4 + state.extraPages.length);
+          autoSave();
+        }
+      }
+    }
+
+    function openAiForExtraPageAct(pageId, actId) {
+      const page = state.extraPages.find(p => p.id === pageId);
+      if (!page) return;
+      const act = page.activities.find(a => a.id === actId);
+      currentAiContext = {
+        type: 'activity',
+        targetKey: null,
+        roomKey: `extra-${pageId}`,
+        activityId: actId
+      };
+      document.getElementById('ai-target-select').value = 'activity';
+      const promptInit = act ? `[${page.title}]: ${act.title || ''}. ${act.text || ''}` : '';
+      document.getElementById('ai-user-prompt').value = promptInit.trim();
+      document.getElementById('ai-result-area').classList.add('hidden');
+      document.getElementById('ai-apply-btn').classList.remove('hidden');
+      document.getElementById('ai-modal').classList.remove('hidden');
+    }
+
+    // Editor da página extra à esquerda
+    function renderExtraPageEditor(pageId) {
+      const container = document.getElementById('editor-panel-extra');
+      const page = state.extraPages.find(p => p.id === pageId);
+      if (!page) {
+        container.innerHTML = '';
+        return;
+      }
+
+      const totalPages = 4 + (state.extraPages ? state.extraPages.length : 0);
+      const pageIndex = 5 + state.extraPages.findIndex(p => p.id === pageId);
+      const cfg = themeColors[page.color] || themeColors.purple;
+
+      let actsHtml = '';
+      page.activities.forEach((act, idx) => {
+        actsHtml += `
+          <div class="p-3 bg-white border border-${cfg.border}-200 rounded-xl space-y-2 text-xs">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-${cfg.textDark}">Notícia #${idx + 1}</span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="openAiForExtraPageAct(${page.id}, ${act.id})" class="px-2 py-0.5 bg-purple-100 hover:bg-purple-200 text-purple-800 font-bold text-[10px] rounded-lg border border-purple-200 transition flex items-center gap-1">
+                  <span>✨ IA Notícia</span>
+                </button>
+                <button onclick="removeExtraPageActivity(${page.id}, ${act.id})" class="text-rose-500 hover:text-rose-700 font-bold text-xs">✕ Apagar</button>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 mb-0.5">Etiqueta / Domínio</label>
+                <input type="text" value="${act.tag || ''}" oninput="updateExtraPageActField(${page.id}, ${act.id}, 'tag', this.value)"
+                  class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg">
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 mb-0.5">Título da Atividade</label>
+                <input type="text" value="${act.title || ''}" oninput="updateExtraPageActField(${page.id}, ${act.id}, 'title', this.value)"
+                  class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg font-bold">
+              </div>
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-500 mb-0.5">Descrição da Atividade</label>
+              <textarea rows="2" oninput="updateExtraPageActField(${page.id}, ${act.id}, 'text', this.value)"
+                class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg">${act.text || ''}</textarea>
+            </div>
+            <div class="flex items-center justify-between flex-wrap gap-2 pt-1 border-t border-slate-100">
+              <div class="flex items-center gap-2">
+                <label class="cursor-pointer bg-${cfg.bgLight} border border-${cfg.border}-300 hover:opacity-80 text-${cfg.textDark} px-3 py-1.5 rounded-xl font-bold text-[11px] inline-flex items-center gap-1.5 transition">
+                  <span>📷 Escolher Foto</span>
+                  <input type="file" accept="image/*" class="hidden" onchange="uploadExtraPagePhoto(event, ${page.id}, ${act.id})">
+                </label>
+                <button onclick="promptPhotoUrlExtra(${page.id}, ${act.id})" class="text-[11px] text-slate-500 hover:text-slate-800 underline font-medium">Link de foto</button>
+              </div>
+              ${act.imageUrl ? `
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[11px] text-emerald-600 font-bold">✓ Foto colocada</span>
+                  <button onclick="removeExtraPagePhoto(${page.id}, ${act.id})" class="text-[11px] text-rose-500 hover:text-rose-700 font-bold">✕ Remover</button>
+                </div>
+              ` : `<span class="text-[11px] text-slate-400">Sem foto</span>`}
+            </div>
+          </div>
+        `;
+      });
+
+      let quotesHtml = '';
+      page.quotes.forEach(quote => {
+        quotesHtml += `
+          <div class="p-2 bg-white border border-slate-200 rounded-xl text-xs space-y-1">
+            <div class="flex justify-between items-center">
+              <input type="text" placeholder="Nome da criança e idade" value="${quote.author || ''}" 
+                oninput="updateExtraPageQuoteField(${page.id}, ${quote.id}, 'author', this.value)"
+                class="w-3/4 px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg font-bold">
+              <button onclick="removeExtraPageQuote(${page.id}, ${quote.id})" class="text-rose-500 hover:text-rose-700 font-bold text-xs">✕</button>
+            </div>
+            <input type="text" placeholder="Frase ou fala dita" value="${quote.text || ''}" 
+              oninput="updateExtraPageQuoteField(${page.id}, ${quote.id}, 'text', this.value)"
+              class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg">
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="bg-purple-50/70 border border-purple-200 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between border-b border-purple-200 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-3.5 h-3.5 rounded-full ${cfg.dot}"></span>
+              <h2 class="font-title text-base text-purple-950 font-bold">Página: ${page.title}</h2>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-purple-200 text-purple-900">Pág. ${pageIndex} de ${totalPages}</span>
+              <button onclick="removeExtraPage(${page.id})" class="text-[11px] text-rose-600 hover:text-rose-800 font-bold underline">Eliminar Página</button>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Título da Página / Secção</label>
+              <input type="text" value="${page.title || ''}" oninput="updateExtraPageField(${page.id}, 'title', this.value)"
+                class="w-full px-3 py-2 bg-white border border-purple-200 rounded-xl font-bold">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Cor do Cabeçalho</label>
+              <select onchange="updateExtraPageField(${page.id}, 'color', this.value)" class="w-full px-3 py-2 bg-white border border-purple-200 rounded-xl font-medium">
+                <option value="purple" ${page.color === 'purple' ? 'selected' : ''}>Roxo / Violeta</option>
+                <option value="orange" ${page.color === 'orange' ? 'selected' : ''}>Laranja Sol</option>
+                <option value="teal" ${page.color === 'teal' ? 'selected' : ''}>Turquesa</option>
+                <option value="pink" ${page.color === 'pink' ? 'selected' : ''}>Rosa Fúcsia</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Subtítulo / Grupo</label>
+              <input type="text" value="${page.subtitle || ''}" oninput="updateExtraPageField(${page.id}, 'subtitle', this.value)"
+                class="w-full px-3 py-2 bg-white border border-purple-200 rounded-xl font-medium" placeholder="Ex: Projetos Criativos">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Equipa Responsável</label>
+              <input type="text" value="${page.team || ''}" oninput="updateExtraPageField(${page.id}, 'team', this.value)"
+                class="w-full px-3 py-2 bg-white border border-purple-200 rounded-xl font-medium">
+            </div>
+            <div class="col-span-2">
+              <label class="block font-bold text-slate-700 mb-1">Mensagem ou Introdução da Página</label>
+              <textarea rows="2" oninput="updateExtraPageField(${page.id}, 'intro', this.value)"
+                class="w-full px-3 py-2 bg-white border border-purple-200 rounded-xl leading-relaxed text-xs">${page.intro || ''}</textarea>
+            </div>
+          </div>
+
+          <div class="pt-2 flex items-center justify-between border-t border-purple-200">
+            <h3 class="font-title text-xs font-bold text-purple-950">Atividades e Fotos</h3>
+            <button onclick="addExtraPageActivity(${page.id})" class="px-2.5 py-1 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl transition">
+              + Atividade
+            </button>
+          </div>
+
+          <div class="space-y-3">
+            ${actsHtml}
+          </div>
+
+          <!-- Pérolas -->
+          <div class="pt-2 border-t border-purple-200">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-title text-xs font-bold text-purple-950">Pérolas &amp; Comentários dos Meninos</h3>
+              <button onclick="addExtraPageQuote(${page.id})" class="px-2.5 py-1 bg-purple-100 hover:bg-purple-200 text-purple-900 text-xs font-bold rounded-xl transition">
+                + Frase
+              </button>
+            </div>
+            <div class="space-y-2">
+              ${quotesHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Renderização das páginas extras no lado direito (A4)
+    function renderExtraPagesPreview(totalPages) {
+      const container = document.getElementById('extra-pages-preview-container');
+      container.innerHTML = '';
+
+      if (!state.extraPages || state.extraPages.length === 0) return;
+
+      state.extraPages.forEach((page, idx) => {
+        const pageNum = 5 + idx;
+        const cfg = themeColors[page.color] || themeColors.purple;
+
+        let actsGridHtml = '';
+        page.activities.forEach(act => {
+          let imgHtml = '';
+          if (act.imageUrl) {
+            imgHtml = `
+              <div class="h-32 sm:h-36 w-full overflow-hidden bg-slate-100">
+                <img src="${act.imageUrl}" alt="${act.title}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/f3f4f6/9ca3af?text=Foto'">
+              </div>
+            `;
+          }
+          actsGridHtml += `
+            <div class="bg-white rounded-2xl overflow-hidden border border-${cfg.border}-200 flex flex-col justify-between shadow-2xs">
+              ${imgHtml}
+              <div class="p-3 sm:p-3.5">
+                <span class="inline-block px-2 py-0.5 bg-${cfg.bgLight} text-${cfg.textDark} text-[9px] font-extrabold rounded-md uppercase tracking-wider mb-1">
+                  ${act.tag || 'Atividade'}
+                </span>
+                <h4 class="font-title font-bold text-xs sm:text-sm text-slate-900 leading-snug mb-1">
+                  ${act.title || 'Título'}
+                </h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                  ${act.text || ''}
+                </p>
+              </div>
+            </div>
+          `;
+        });
+
+        let quotesGridHtml = '';
+        page.quotes.forEach(quote => {
+          quotesGridHtml += `
+            <div class="bg-white p-2.5 rounded-xl border border-slate-100 shadow-2xs text-xs">
+              <p class="italic text-slate-700 leading-snug">“${quote.text || '...'}”</p>
+              <span class="block text-right font-bold text-[10px] text-${cfg.textDark} mt-1">— ${quote.author || 'Criança'}</span>
+            </div>
+          `;
+        });
+
+        const article = document.createElement('article');
+        article.id = `page-extra-${page.id}`;
+        article.className = `sheet-a4 preview-page w-full max-w-[210mm] bg-white min-h-[297mm] rounded-3xl shadow-xl border border-${cfg.border}-200 p-6 sm:p-7 flex flex-col justify-between transition-all relative overflow-hidden`;
+        
+        article.innerHTML = `
+          <div>
+            <!-- Cabeçalho -->
+            <div class="border-b-2 border-${cfg.border}-800 pb-2 mb-3 flex items-center justify-between gap-2 text-xs">
+              <div class="flex items-center gap-2">
+                <span class="w-7 h-7 rounded-xl ${cfg.dot} text-white flex items-center justify-center font-bold text-xs">
+                  ${page.emoji || '⭐'}
+                </span>
+                <div>
+                  <span class="text-[9px] uppercase tracking-widest font-extrabold text-${cfg.border}-700 block leading-none">Jornal Traquinices &amp; Companhia</span>
+                  <span class="font-bold text-slate-900 text-sm">JI Alexandre Rodrigues Ferreira</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="font-extrabold text-slate-900 text-xs uppercase tracking-wider block">${page.title}</span>
+                <span class="text-[10px] text-${cfg.border}-700 font-bold">${page.subtitle || ''}</span>
+              </div>
+            </div>
+
+            <!-- Banner -->
+            <div class="rounded-2xl p-4 sm:p-4 mb-4 bg-gradient-to-r ${cfg.gradient} text-white shadow-xs flex items-center justify-between">
+              <div>
+                <div class="inline-block bg-white/90 backdrop-blur-xs px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide text-slate-900 mb-1">
+                  Caderno das Nossas Crianças
+                </div>
+                <h2 class="font-title text-2xl sm:text-3xl font-bold tracking-tight text-white leading-tight">
+                  ${page.title}
+                </h2>
+                <p class="text-xs font-semibold text-white/90 mt-0.5">
+                  Equipa: ${page.team || 'Educadora e Assistentes'}
+                </p>
+              </div>
+              <div class="text-3xl pr-2 select-none">
+                🌟🎈🎨
+              </div>
+            </div>
+
+            <!-- Mensagem -->
+            <div class="${cfg.cardBg} border-l-4 border-${cfg.border}-500 rounded-r-2xl p-3 sm:p-3.5 mb-4 text-xs text-slate-900">
+              <span class="font-title font-bold text-${cfg.textDark} block uppercase tracking-wider text-[11px] mb-1">
+                ✨ O Nosso Olhar Este Mês:
+              </span>
+              <p class="italic leading-relaxed">
+                ${page.intro || ''}
+              </p>
+            </div>
+
+            <!-- Atividades -->
+            <div class="mb-4">
+              <div class="flex items-center gap-2 mb-2.5">
+                <span class="w-2.5 h-2.5 rounded-full ${cfg.dot}"></span>
+                <h3 class="font-title text-sm sm:text-base font-bold text-slate-900 uppercase tracking-wide">
+                  Atividades &amp; Vivências
+                </h3>
+                <div class="flex-1 border-b border-dashed border-${cfg.border}-300"></div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                ${actsGridHtml}
+              </div>
+            </div>
+
+            <!-- Pérolas -->
+            <div class="${cfg.cardBg}/80 border border-${cfg.border}-200 rounded-2xl p-3.5">
+              <h4 class="font-title font-bold text-xs uppercase tracking-wider text-${cfg.textDark} flex items-center gap-1.5 mb-2">
+                <span>💬</span> Pérolas dos Nossos Meninos
+              </h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                ${quotesGridHtml}
+              </div>
+            </div>
+          </div>
+
+          <!-- Rodapé -->
+          <footer class="pt-3 border-t-2 border-${cfg.border}-800 mt-4 flex justify-between items-center text-[10px] text-slate-500 font-semibold">
+            <span>Traquinices &amp; Companhia &bull; ${page.title}</span>
+            <span>Página ${pageNum} de ${totalPages}</span>
+          </footer>
+        `;
+
+        container.appendChild(article);
+      });
+    }
+
+    // Atualização de abas dinâmicas nos botões superiores e do formulário
+    function renderExtraTabs() {
+      const headerExtraContainer = document.getElementById('header-extra-tabs');
+      const formExtraContainer = document.getElementById('form-extra-tabs');
+      headerExtraContainer.innerHTML = '';
+      formExtraContainer.innerHTML = '';
+
+      if (!state.extraPages) return;
+
+      state.extraPages.forEach((p, idx) => {
+        // Tab no topo
+        const btnHeader = document.createElement('button');
+        btnHeader.id = `tab-btn-extra-${p.id}`;
+        btnHeader.onclick = () => switchTab(`extra-${p.id}`);
+        btnHeader.className = "tab-button px-3 py-1.5 rounded-lg font-bold bg-white text-purple-700 hover:bg-purple-50 border border-purple-200 transition flex items-center gap-1.5";
+        btnHeader.innerHTML = `
+          <span class="w-2.5 h-2.5 rounded-full ${themeColors[p.color]?.dot || 'bg-purple-500'}"></span>
+          <span>${p.title}</span>
+        `;
+        headerExtraContainer.appendChild(btnHeader);
+
+        // Tab no formulário
+        const btnForm = document.createElement('button');
+        btnForm.id = `form-tab-extra-${p.id}`;
+        btnForm.onclick = () => switchTab(`extra-${p.id}`);
+        btnForm.className = "px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 text-purple-700 hover:bg-purple-50 transition";
+        btnForm.textContent = p.title;
+        formExtraContainer.appendChild(btnForm);
+      });
+    }
+
+    function addNewGeneralActivity() {
+      state.generalActivities.push({
+        id: Date.now(),
+        tag: "Toda a Escola",
+        title: "Novo Destaque Comum",
+        text: "Descreva a atividade partilhada por todas as salas...",
+        imageUrl: ""
+      });
+      renderGeneralActivitiesForm();
+      renderGeneralActivitiesPreview();
+      autoSave();
+    }
+
+    function removeGeneralActivity(id) {
+      state.generalActivities = state.generalActivities.filter(a => a.id !== id);
+      renderGeneralActivitiesForm();
+      renderGeneralActivitiesPreview();
+      autoSave();
+    }
+
+    function removeGeneralPhoto(id) {
+      const item = state.generalActivities.find(a => a.id === id);
+      if (item) {
+        item.imageUrl = "";
+        renderGeneralActivitiesForm();
+        renderGeneralActivitiesPreview();
+        autoSave();
+        showToastNotification("Fotografia removida.");
+      }
+    }
+
+    function promptPhotoUrlGeneral(id) {
+      const url = prompt("Cole o endereço web da imagem (URL):");
+      if (url && url.trim().length > 0) {
+        const item = state.generalActivities.find(a => a.id === id);
+        if (item) {
+          item.imageUrl = url.trim();
+          renderGeneralActivitiesForm();
+          renderGeneralActivitiesPreview();
+          autoSave();
+          showToastNotification("Foto adicionada!");
+        }
+      }
+    }
+
+    function updateGeneralAct(id, field, val) {
+      const item = state.generalActivities.find(a => a.id === id);
+      if (item) {
+        item[field] = val;
+        renderGeneralActivitiesPreview();
+        autoSave();
+      }
+    }
+
+    function uploadGeneralPhoto(event, id) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const item = state.generalActivities.find(a => a.id === id);
+        if (item) {
+          item.imageUrl = e.target.result;
+          renderGeneralActivitiesForm();
+          renderGeneralActivitiesPreview();
+          autoSave();
+          showToastNotification("Fotografia carregada com sucesso!");
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ========================================================
+    // RENDERIZAÇÃO DAS 3 SALAS (VERMELHA, VERDE, AZUL)
+    // ========================================================
+    function renderRoomPreview(roomKey) {
+      const room = state.rooms[roomKey];
+      const keyMap = { red: 'Red', green: 'Green', blue: 'Blue' };
+      const compKey = keyMap[roomKey];
+      const colorMap = {
+        red: { border: 'rose', bgLight: 'rose-100', textDark: 'rose-800' },
+        green: { border: 'emerald', bgLight: 'emerald-100', textDark: 'emerald-800' },
+        blue: { border: 'sky', bgLight: 'sky-100', textDark: 'sky-800' }
+      };
+      const cfg = colorMap[roomKey];
+
+      document.getElementById(`preview-room${compKey}-subtitle`).textContent = room.subtitle || '';
+      document.getElementById(`preview-room${compKey}-team`).textContent = `Equipa: ${room.team || 'Educadora e Assistentes'}`;
+      document.getElementById(`preview-room${compKey}-intro`).textContent = room.intro || '';
+
+      const previewContainer = document.getElementById(`preview-room${compKey}-activities-grid`);
+      if (previewContainer) {
+        previewContainer.innerHTML = '';
+        room.activities.forEach(act => {
+          const previewCard = document.createElement('div');
+          previewCard.className = `bg-white rounded-2xl overflow-hidden border border-${cfg.border}-200 flex flex-col justify-between shadow-2xs`;
+          let imgHtml = '';
+          if (act.imageUrl) {
+            imgHtml = `
+              <div class="h-32 sm:h-36 w-full overflow-hidden bg-slate-100">
+                <img src="${act.imageUrl}" alt="${act.title}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/f3f4f6/9ca3af?text=Foto'">
+              </div>
+            `;
+          }
+          previewCard.innerHTML = `
+            ${imgHtml}
+            <div class="p-3 sm:p-3.5">
+              <span class="inline-block px-2 py-0.5 bg-${cfg.bgLight} text-${cfg.textDark} text-[9px] font-extrabold rounded-md uppercase tracking-wider mb-1">
+                ${act.tag || 'Atividade'}
+              </span>
+              <h4 class="font-title font-bold text-xs sm:text-sm text-slate-900 leading-snug mb-1">
+                ${act.title || 'Título'}
+              </h4>
+              <p class="text-[11px] text-slate-600 leading-relaxed">
+                ${act.text || ''}
+              </p>
+            </div>
+          `;
+          previewContainer.appendChild(previewCard);
+        });
+      }
+
+      const quotePrevCont = document.getElementById(`preview-room${compKey}-quotes-list`);
+      if (quotePrevCont) {
+        quotePrevCont.innerHTML = '';
+        room.quotes.forEach(quote => {
+          const qp = document.createElement('div');
+          qp.className = 'bg-white p-2.5 rounded-xl border border-slate-100 shadow-2xs text-xs';
+          qp.innerHTML = `
+            <p class="italic text-slate-700 leading-snug">“${quote.text || '...'}”</p>
+            <span class="block text-right font-bold text-[10px] text-${cfg.textDark} mt-1">— ${quote.author || 'Criança'}</span>
+          `;
+          quotePrevCont.appendChild(qp);
+        });
+      }
+    }
+
+    function renderRoomForm(roomKey) {
+      const room = state.rooms[roomKey];
+      const capKey = roomKey.charAt(0).toUpperCase() + roomKey.slice(1);
+      const keyMap = { red: 'Red', green: 'Green', blue: 'Blue' };
+      const compKey = keyMap[roomKey];
+      const colorMap = {
+        red: { border: 'rose', bgLight: 'rose-100', textDark: 'text-rose-900' },
+        green: { border: 'emerald', bgLight: 'emerald-100', textDark: 'text-emerald-900' },
+        blue: { border: 'sky', bgLight: 'sky-100', textDark: 'text-sky-900' }
+      };
+      const cfg = colorMap[roomKey];
+
+      const formContainer = document.getElementById(`room${compKey}-activities-form`);
+      if (!formContainer) return;
+      formContainer.innerHTML = '';
+
+      room.activities.forEach((act, idx) => {
+        const formDiv = document.createElement('div');
+        formDiv.className = `p-3 bg-white border border-${cfg.border}-200 rounded-xl space-y-2 text-xs`;
+        formDiv.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="font-bold ${cfg.textDark}">Notícia #${idx + 1} (${capKey})</span>
+            <div class="flex items-center gap-1.5">
+              <button onclick="openAiForRoomAct('${roomKey}', ${act.id})" class="px-2 py-0.5 bg-purple-100 hover:bg-purple-200 text-purple-800 font-bold text-[10px] rounded-lg border border-purple-200 transition flex items-center gap-1">
+                <span>✨ IA Notícia</span>
+              </button>
+              <button onclick="removeRoomActivity('${roomKey}', ${act.id})" class="text-rose-500 hover:text-rose-700 font-bold text-xs">✕ Apagar</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] font-bold text-slate-500 mb-0.5">Etiqueta / Domínio</label>
+              <input type="text" value="${act.tag || ''}" oninput="updateRoomActField('${roomKey}', ${act.id}, 'tag', this.value)"
+                class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-500 mb-0.5">Título da Atividade</label>
+              <input type="text" value="${act.title || ''}" oninput="updateRoomActField('${roomKey}', ${act.id}, 'title', this.value)"
+                class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg font-bold">
+            </div>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 mb-0.5">Descrição da Atividade</label>
+            <textarea rows="2" id="room-${roomKey}-act-text-${act.id}" oninput="updateRoomActField('${roomKey}', ${act.id}, 'text', this.value)"
+              class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg">${act.text || ''}</textarea>
+          </div>
+          <div class="flex items-center justify-between flex-wrap gap-2 pt-1 border-t border-slate-100">
+            <div class="flex items-center gap-2">
+              <label class="cursor-pointer bg-${cfg.bgLight} border border-${cfg.border}-300 hover:opacity-80 ${cfg.textDark} px-3 py-1.5 rounded-xl font-bold text-[11px] inline-flex items-center gap-1.5 transition">
+                <span>📷 Escolher Foto</span>
+                <input type="file" accept="image/*" class="hidden" onchange="uploadRoomPhoto(event, '${roomKey}', ${act.id})">
+              </label>
+              <button onclick="promptPhotoUrlRoom('${roomKey}', ${act.id})" class="text-[11px] text-slate-500 hover:text-slate-800 underline font-medium">Link de foto</button>
+            </div>
+            ${act.imageUrl ? `
+              <div class="flex items-center gap-1.5">
+                <span class="text-[11px] text-emerald-600 font-bold">✓ Foto colocada</span>
+                <button onclick="removeRoomPhoto('${roomKey}', ${act.id})" class="text-[11px] text-rose-500 hover:text-rose-700 font-bold">✕ Remover</button>
+              </div>
+            ` : `<span class="text-[11px] text-slate-400">Sem foto</span>`}
+          </div>
+        `;
+        formContainer.appendChild(formDiv);
+      });
+
+      const quoteFormCont = document.getElementById(`room${compKey}-quotes-form`);
+      if (quoteFormCont) {
+        quoteFormCont.innerHTML = '';
+        room.quotes.forEach(quote => {
+          const qf = document.createElement('div');
+          qf.className = 'p-2 bg-white border border-slate-200 rounded-xl text-xs space-y-1';
+          qf.innerHTML = `
+            <div class="flex justify-between items-center">
+              <input type="text" placeholder="Nome da criança e idade" value="${quote.author || ''}" 
+                oninput="updateRoomQuoteField('${roomKey}', ${quote.id}, 'author', this.value)"
+                class="w-3/4 px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg font-bold">
+              <button onclick="removeRoomQuote('${roomKey}', ${quote.id})" class="text-rose-500 hover:text-rose-700 font-bold text-xs">✕</button>
+            </div>
+            <input type="text" placeholder="Frase ou fala dita" value="${quote.text || ''}" 
+              oninput="updateRoomQuoteField('${roomKey}', ${quote.id}, 'text', this.value)"
+              class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg">
+          `;
+          quoteFormCont.appendChild(qf);
+        });
+      }
+    }
+
+    // Ações para Atividades das Salas
+    function addRoomActivity(roomKey) {
+      state.rooms[roomKey].activities.push({
+        id: Date.now(),
+        tag: "Vivências da Sala",
+        title: "Nova Atividade Realizada",
+        text: "Descreva aqui os passos da atividade, a exploração dos materiais e as reações das crianças...",
+        imageUrl: ""
+      });
+      renderRoomForm(roomKey);
+      renderRoomPreview(roomKey);
+      autoSave();
+    }
+
+    function removeRoomActivity(roomKey, id) {
+      state.rooms[roomKey].activities = state.rooms[roomKey].activities.filter(a => a.id !== id);
+      renderRoomForm(roomKey);
+      renderRoomPreview(roomKey);
+      autoSave();
+    }
+
+    function removeRoomPhoto(roomKey, id) {
+      const act = state.rooms[roomKey].activities.find(a => a.id === id);
+      if (act) {
+        act.imageUrl = "";
+        renderRoomForm(roomKey);
+        renderRoomPreview(roomKey);
+        autoSave();
+        showToastNotification("Fotografia da sala removida.");
+      }
+    }
+
+    function promptPhotoUrlRoom(roomKey, id) {
+      const url = prompt("Cole o endereço web da imagem (URL):");
+      if (url && url.trim().length > 0) {
+        const act = state.rooms[roomKey].activities.find(a => a.id === id);
+        if (act) {
+          act.imageUrl = url.trim();
+          renderRoomForm(roomKey);
+          renderRoomPreview(roomKey);
+          autoSave();
+          showToastNotification("Fotografia adicionada!");
+        }
+      }
+    }
+
+    function updateRoomActField(roomKey, id, field, val) {
+      const act = state.rooms[roomKey].activities.find(a => a.id === id);
+      if (act) {
+        act[field] = val;
+        renderRoomPreview(roomKey);
+        autoSave();
+      }
+    }
+
+    function uploadRoomPhoto(event, roomKey, id) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const act = state.rooms[roomKey].activities.find(a => a.id === id);
+        if (act) {
+          act.imageUrl = e.target.result;
+          renderRoomForm(roomKey);
+          renderRoomPreview(roomKey);
+          autoSave();
+          showToastNotification("Fotografia adicionada à sala!");
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Ações para Frases das Salas
+    function addRoomQuote(roomKey) {
+      state.rooms[roomKey].quotes.push({
+        id: Date.now(),
+        author: "Criança, anos",
+        text: "Frase carinhosa ou divertida dita na sala..."
+      });
+      renderRoomForm(roomKey);
+      renderRoomPreview(roomKey);
+      autoSave();
+    }
+
+    function removeRoomQuote(roomKey, id) {
+      state.rooms[roomKey].quotes = state.rooms[roomKey].quotes.filter(q => q.id !== id);
+      renderRoomForm(roomKey);
+      renderRoomPreview(roomKey);
+      autoSave();
+    }
+
+    function updateRoomQuoteField(roomKey, id, field, val) {
+      const q = state.rooms[roomKey].quotes.find(item => item.id === id);
+      if (q) {
+        q[field] = val;
+        renderRoomPreview(roomKey);
+        autoSave();
+      }
+    }
+
+    function renderGeneralActivitiesForm() {
+      const formContainer = document.getElementById('general-activities-form-container');
+      if (!formContainer) return;
+      formContainer.innerHTML = '';
+
+      state.generalActivities.forEach((act, idx) => {
+        const formDiv = document.createElement('div');
+        formDiv.className = 'p-3 bg-amber-50/40 border border-amber-200/80 rounded-2xl space-y-2 text-xs relative';
+        formDiv.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-amber-900">Destaque Geral #${idx + 1}</span>
+            <div class="flex items-center gap-1.5">
+              <button onclick="openAiForGeneralAct(${act.id})" class="px-2 py-0.5 bg-purple-100 hover:bg-purple-200 text-purple-800 font-bold text-[10px] rounded-lg border border-purple-200 transition flex items-center gap-1">
+                <span>✨ IA Notícia</span>
+              </button>
+              <button onclick="removeGeneralActivity(${act.id})" class="text-rose-500 hover:text-rose-700 font-bold text-xs" title="Apagar">✕ Apagar</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] font-bold text-slate-500 mb-0.5">Etiqueta / Domínio</label>
+              <input type="text" placeholder="Ex: Comunidade Escolar" value="${act.tag || ''}" 
+                oninput="updateGeneralAct(${act.id}, 'tag', this.value)"
+                class="w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-500 mb-0.5">Título do Destaque</label>
+              <input type="text" placeholder="Título" value="${act.title || ''}" 
+                oninput="updateGeneralAct(${act.id}, 'title', this.value)"
+                class="w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg font-bold">
+            </div>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 mb-0.5">Descrição</label>
+            <textarea rows="2" placeholder="Descreva brevemente..." 
+              oninput="updateGeneralAct(${act.id}, 'text', this.value)"
+              class="w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg">${act.text || ''}</textarea>
+          </div>
+          <div class="flex items-center justify-between flex-wrap gap-2 pt-1 border-t border-amber-100">
+            <div class="flex items-center gap-2">
+              <label class="cursor-pointer bg-white border border-amber-300 hover:bg-amber-100/50 text-amber-900 px-3 py-1.5 rounded-xl font-bold text-[11px] inline-flex items-center gap-1.5 transition">
+                <span>📷 Escolher Foto</span>
+                <input type="file" accept="image/*" class="hidden" onchange="uploadGeneralPhoto(event, ${act.id})">
+              </label>
+              <button onclick="promptPhotoUrlGeneral(${act.id})" class="text-[11px] text-slate-500 hover:text-slate-800 underline font-medium">Link de foto</button>
+            </div>
+            ${act.imageUrl ? `
+              <div class="flex items-center gap-1.5">
+                <span class="text-[11px] text-emerald-600 font-bold">✓ Foto colocada</span>
+                <button onclick="removeGeneralPhoto(${act.id})" class="text-[11px] text-rose-500 hover:text-rose-700 font-bold">✕ Remover</button>
+              </div>
+            ` : '<span class="text-[11px] text-slate-400">Sem foto</span>'}
+          </div>
+        `;
+        formContainer.appendChild(formDiv);
+      });
+    }
+
+    function renderGeneralActivitiesPreview() {
+      const previewGrid = document.getElementById('preview-general-activities-grid');
+      if (!previewGrid) return;
+      previewGrid.innerHTML = '';
+
+      state.generalActivities.forEach(act => {
+        const previewCard = document.createElement('div');
+        previewCard.className = 'bg-white rounded-2xl overflow-hidden border border-amber-200/90 flex flex-col justify-between shadow-2xs';
+        let photoHtml = '';
+        if (act.imageUrl) {
+          photoHtml = `
+            <div class="h-32 sm:h-36 w-full overflow-hidden bg-slate-100">
+              <img src="${act.imageUrl}" alt="${act.title}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/f3f4f6/9ca3af?text=Foto'">
+            </div>
+          `;
+        }
+        previewCard.innerHTML = `
+          ${photoHtml}
+          <div class="p-3 sm:p-3.5">
+            <span class="inline-block px-2 py-0.5 bg-amber-100 text-amber-900 text-[9px] font-extrabold rounded-md uppercase tracking-wider mb-1">
+              ${act.tag || 'Destaque'}
+            </span>
+            <h4 class="font-title font-bold text-xs sm:text-sm text-slate-900 leading-snug mb-1">
+              ${act.title || 'Título do Destaque'}
+            </h4>
+            <p class="text-[11px] text-slate-600 leading-relaxed">
+              ${act.text || ''}
+            </p>
+          </div>
+        `;
+        previewGrid.appendChild(previewCard);
+      });
+    }
+
+    function renderCapa() {
+      document.getElementById('preview-mainTitle').textContent = state.mainTitle || 'Traquinices & Companhia';
+      document.getElementById('preview-monthYear').textContent = state.monthYear || '';
+      document.getElementById('preview-edition').textContent = state.edition || '';
+      document.getElementById('preview-slogan').textContent = `"${state.slogan || 'Pequenos traquinas, grandes notícias!'}"`;
+      document.getElementById('preview-subSlogan').textContent = state.subSlogan || '';
+      document.getElementById('preview-mascotQuote').textContent = `"${state.mascotQuote || ''}"`;
+      document.getElementById('preview-editorialTitle').textContent = state.editorialTitle || 'Bem-vindos à Nossa Edição!';
+      document.getElementById('preview-editorialText').textContent = state.editorialText || '';
+      document.getElementById('preview-editorialSign').textContent = state.editorialSign ? `— ${state.editorialSign}` : '';
+
+      const agendaList = document.getElementById('preview-general-agenda-list');
+      agendaList.innerHTML = '';
+      if (!state.generalAgenda || state.generalAgenda.trim() === '') {
+        agendaList.innerHTML = `<li class="text-[11px] text-slate-400 italic">Sem eventos comuns registados.</li>`;
+      } else {
+        const items = state.generalAgenda.split('\n').filter(i => i.trim().length > 0);
+        items.forEach(item => {
+          const li = document.createElement('li');
+          li.className = 'flex items-start gap-1.5';
+          li.innerHTML = `<span class="text-amber-500 font-bold">•</span><span>${item}</span>`;
+          agendaList.appendChild(li);
+        });
+      }
+
+      const remBox = document.getElementById('preview-general-reminder-box');
+      if (state.generalReminder && state.generalReminder.trim() !== '') {
+        remBox.classList.remove('hidden');
+        document.getElementById('preview-general-reminder').textContent = state.generalReminder;
+      } else {
+        remBox.classList.add('hidden');
+      }
+
+      renderGeneralActivitiesPreview();
+    }
+
+    function renderAllPreview() {
+      const totalPages = 4 + (state.extraPages ? state.extraPages.length : 0);
+
+      const f1 = document.getElementById('footer-page-1');
+      const f2 = document.getElementById('footer-page-2');
+      const f3 = document.getElementById('footer-page-3');
+      const f4 = document.getElementById('footer-page-4');
+      if (f1) f1.textContent = `Página 1 de ${totalPages}`;
+      if (f2) f2.textContent = `Página 2 de ${totalPages}`;
+      if (f3) f3.textContent = `Página 3 de ${totalPages}`;
+      if (f4) f4.textContent = `Página 4 de ${totalPages}`;
+
+      const dlLabel = document.getElementById('btn-download-label');
+      if (dlLabel) dlLabel.textContent = `Descarregar Jornal (${totalPages} Páginas PDF)`;
+
+      const allPagesBtn = document.getElementById('tab-btn-todas-label');
+      if (allPagesBtn) allPagesBtn.textContent = `📑 Ver Todas (${totalPages} Páginas)`;
+
+      renderCapa();
+      renderRoomPreview('red');
+      renderRoomPreview('green');
+      renderRoomPreview('blue');
+      renderExtraPagesPreview(totalPages);
+    }
+
+    function renderAllForms() {
+      renderGeneralActivitiesForm();
+      renderRoomForm('red');
+      renderRoomForm('green');
+      renderRoomForm('blue');
+      renderExtraTabs();
+    }
+
+    function renderAll() {
+      renderAllForms();
+      renderAllPreview();
+      if (currentTab.startsWith('extra-')) {
+        const extraId = parseInt(currentTab.replace('extra-', ''));
+        renderExtraPageEditor(extraId);
+      }
+    }
+
+    // Modal de Descarregamento / Impressão adaptado para todas as páginas (4 ou mais)
+    function openDownloadModal() {
+      document.getElementById('download-modal').classList.remove('hidden');
+    }
+
+    function closeDownloadModal() {
+      document.getElementById('download-modal').classList.add('hidden');
+    }
+
+    // Opção 1: Impressão direta incluindo todas as páginas adicionais
+    function triggerDirectPrint() {
+      closeDownloadModal();
+      const allPages = document.querySelectorAll('.sheet-a4');
+      allPages.forEach(el => el.classList.remove('hidden'));
+
+      setTimeout(() => {
+        try {
+          window.print();
+        } catch (err) {
+          console.warn("window.print bloqueado no ambiente atual, abrindo nova aba:", err);
+          openInNewWindow();
+        }
+
+        if ('onafterprint' in window) {
+          window.onafterprint = () => {
+            switchTab(currentTab);
+          };
+        } else {
+          setTimeout(() => {
+            switchTab(currentTab);
+          }, 1500);
+        }
+      }, 150);
+    }
+
+    // Opção 2: Abre todas as páginas numa nova janela sem restrições
+    function openInNewWindow() {
+      closeDownloadModal();
+      const allPages = document.querySelectorAll('.sheet-a4');
+      let sheetsHtml = '';
+      allPages.forEach(el => {
+        const clone = el.cloneNode(true);
+        clone.classList.remove('hidden');
+        sheetsHtml += clone.outerHTML;
+      });
+
+      const fullHtml = `<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Traquinices & Companhia — Todas as Páginas</title>
+  <script src="https://cdn.tailwindcss.com"><\/script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Quicksand', sans-serif; background: #fff; margin: 0; padding: 10mm; }
+    .font-title { font-family: 'Fredoka', cursive, sans-serif; }
+    .font-hand { font-family: 'Caveat', cursive; }
+    .sheet-a4 {
+      box-shadow: none !important;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10mm;
+      width: 100%;
+      max-width: 210mm;
+      min-height: 285mm;
+      margin: 0 auto 20mm auto;
+      page-break-after: always;
+      break-after: page;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .sheet-a4:last-child { page-break-after: auto; break-after: auto; margin-bottom: 0; }
+    @media print {
+      body { padding: 0 !important; background: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .sheet-a4 { border: none !important; border-radius: 0 !important; padding: 6mm !important; margin: 0 !important; width: 100% !important; min-height: 287mm !important; }
+      @page { size: A4 portrait; margin: 5mm; }
+    }
+  </style>
+</head>
+<body>
+  ${sheetsHtml}
+  <script>
+    window.onload = function() {
+      setTimeout(function() { window.print(); }, 500);
+    };
+  <\/script>
+</body>
+</html>`;
+
+      const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const newWin = window.open(url, '_blank');
+      if (!newWin) {
+        showToastNotification("Por favor, permita pop-ups no seu navegador para abrir a nova aba.");
+      }
+    }
+
+    // Opção 3: Descarregar o ficheiro .html com todas as páginas
+    function downloadHtmlFile() {
+      closeDownloadModal();
+      const allPages = document.querySelectorAll('.sheet-a4');
+      let sheetsHtml = '';
+      allPages.forEach(el => {
+        const clone = el.cloneNode(true);
+        clone.classList.remove('hidden');
+        sheetsHtml += clone.outerHTML;
+      });
+
+      const fullHtml = `<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Jornal Traquinices e Companhia - JI Alexandre Rodrigues Ferreira</title>
+  <script src="https://cdn.tailwindcss.com"><\/script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Quicksand', sans-serif; background: #f8fafc; margin: 0; padding: 10mm; }
+    .font-title { font-family: 'Fredoka', cursive, sans-serif; }
+    .font-hand { font-family: 'Caveat', cursive; }
+    .sheet-a4 {
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 10mm;
+      width: 100%;
+      max-width: 210mm;
+      min-height: 285mm;
+      margin: 0 auto 15mm auto;
+      page-break-after: always;
+      break-after: page;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .sheet-a4:last-child { page-break-after: auto; break-after: auto; margin-bottom: 0; }
+    @media print {
+      body { padding: 0 !important; background: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .sheet-a4 { box-shadow: none !important; border: none !important; border-radius: 0 !important; padding: 6mm !important; margin: 0 !important; width: 100% !important; min-height: 287mm !important; }
+      @page { size: A4 portrait; margin: 5mm; }
+    }
+  </style>
+</head>
+<body>
+  ${sheetsHtml}
+</body>
+</html>`;
+
+      const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'Jornal_Traquinices_e_Companhia_JI.html';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToastNotification("Ficheiro do jornal descarregado com sucesso!");
+    }
+
+    // Manter atalho anterior apontando para o modal
+    function printNewspaper() {
+      openDownloadModal();
+    }
+
+    function toggleHelpModal() {
+      const modal = document.getElementById('help-modal');
+      modal.classList.toggle('hidden');
+    }
+
+    function showToastNotification(text) {
+      const box = document.getElementById('toast-box');
+      const label = document.getElementById('toast-text');
+      label.textContent = text;
+      box.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        box.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+
+    function restoreSampleData() {
+      state = JSON.parse(JSON.stringify(initialDefaultData));
+      fillAllInputs();
+      renderAllForms();
+      renderAllPreview();
+      autoSave();
+      switchTab('capa');
+      showToastNotification("Exemplo inicial restaurado com sucesso!");
+    }
+
+    function clearAllData() {
+      state = {
+        mainTitle: "Traquinices & Companhia",
+        monthYear: "",
+        edition: "Edição nº ",
+        slogan: "Pequenos traquinas, grandes notícias!",
+        subSlogan: "Feito por crianças, para quem gosta de sorrir.",
+        mascotQuote: "Olá, traquinas! O Traquina andou por aí a espiar... e trouxe novidades!",
+        editorialTitle: "Palavra da Escola",
+        editorialText: "",
+        editorialSign: "A Equipa Pedagógica",
+        generalAgenda: "",
+        generalReminder: "",
+        generalActivities: [],
+        rooms: {
+          red: { subtitle: "Grupo dos 3 Anos (Sala Vermelha)", team: "", intro: "", activities: [], quotes: [] },
+          green: { subtitle: "Grupo dos 4 Anos (Sala Verde)", team: "", intro: "", activities: [], quotes: [] },
+          blue: { subtitle: "Grupo dos 5 Anos (Sala Azul)", team: "", intro: "", activities: [], quotes: [] }
+        },
+        extraPages: []
+      };
+      fillAllInputs();
+      renderAllForms();
+      renderAllPreview();
+      autoSave();
+      switchTab('capa');
+      showToastNotification("Jornal limpo pronto para nova edição!");
+    }
+
+    // ========================================================
+    // INTEGRAÇÃO COM INTELIGÊNCIA ARTIFICIAL (GEMINI API)
+    // ========================================================
+    let currentAiTone = 'carinhoso';
+    let currentAiContext = {
+      type: 'activity', // 'activity', 'editorial', 'mascot', 'quote'
+      targetKey: null,   // direct state field (e.g. 'mascotQuote', 'editorialText')
+      roomKey: null,     // 'red', 'green', 'blue'
+      activityId: null
+    };
+
+    function setAiTone(tone) {
+      currentAiTone = tone;
+      const btnC = document.getElementById('ai-tone-carinhoso');
+      const btnD = document.getElementById('ai-tone-divertido');
+      if (tone === 'carinhoso') {
+        btnC.className = "px-2.5 py-1 rounded-lg border border-purple-300 bg-purple-100 text-purple-900 font-bold text-[11px]";
+        btnD.className = "px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 font-medium text-[11px]";
+      } else {
+        btnD.className = "px-2.5 py-1 rounded-lg border border-purple-300 bg-purple-100 text-purple-900 font-bold text-[11px]";
+        btnC.className = "px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 font-medium text-[11px]";
+      }
+    }
+
+    function openAiGlobalModal() {
+      currentAiContext = { type: 'activity', targetKey: null, roomKey: null, activityId: null };
+      document.getElementById('ai-target-select').value = 'activity';
+      document.getElementById('ai-user-prompt').value = '';
+      document.getElementById('ai-result-area').classList.add('hidden');
+      document.getElementById('ai-apply-btn').classList.add('hidden');
+      document.getElementById('ai-modal').classList.remove('hidden');
+    }
+
+    function closeAiModal() {
+      document.getElementById('ai-modal').classList.add('hidden');
+    }
+
+    function openAiForField(fieldKey, placeholderSuggestion) {
+      currentAiContext = {
+        type: fieldKey === 'mascotQuote' ? 'mascot' : 'editorial',
+        targetKey: fieldKey,
+        roomKey: null,
+        activityId: null
+      };
+      document.getElementById('ai-target-select').value = currentAiContext.type;
+      const currentVal = state[fieldKey] || '';
+      document.getElementById('ai-user-prompt').value = currentVal ? `Melhorar este texto: ${currentVal}` : (placeholderSuggestion || '');
+      document.getElementById('ai-result-area').classList.add('hidden');
+      document.getElementById('ai-apply-btn').classList.remove('hidden');
+      document.getElementById('ai-modal').classList.remove('hidden');
+    }
+
+    function openAiForGeneralAct(actId) {
+      const act = state.generalActivities.find(a => a.id === actId);
+      currentAiContext = {
+        type: 'activity',
+        targetKey: null,
+        roomKey: 'general',
+        activityId: actId
+      };
+      document.getElementById('ai-target-select').value = 'activity';
+      const promptInit = act ? `Atividade: ${act.title || ''}. ${act.text || ''}` : '';
+      document.getElementById('ai-user-prompt').value = promptInit.trim();
+      document.getElementById('ai-result-area').classList.add('hidden');
+      document.getElementById('ai-apply-btn').classList.remove('hidden');
+      document.getElementById('ai-modal').classList.remove('hidden');
+    }
+
+    function openAiForRoomAct(roomKey, actId) {
+      const act = state.rooms[roomKey].activities.find(a => a.id === actId);
+      currentAiContext = {
+        type: 'activity',
+        targetKey: null,
+        roomKey: roomKey,
+        activityId: actId
+      };
+      document.getElementById('ai-target-select').value = 'activity';
+      const roomNames = { red: 'Sala Vermelha (3 anos)', green: 'Sala Verde (4 anos)', blue: 'Sala Azul (5 anos)' };
+      const promptInit = act ? `[${roomNames[roomKey]}]: ${act.title || ''}. ${act.text || ''}` : '';
+      document.getElementById('ai-user-prompt').value = promptInit.trim();
+      document.getElementById('ai-result-area').classList.add('hidden');
+      document.getElementById('ai-apply-btn').classList.remove('hidden');
+      document.getElementById('ai-modal').classList.remove('hidden');
+    }
+
+    async function triggerAiGeneration() {
+      const userPrompt = document.getElementById('ai-user-prompt').value.trim();
+      const targetType = document.getElementById('ai-target-select').value;
+      const loading = document.getElementById('ai-loading-indicator');
+      const genBtn = document.getElementById('ai-generate-btn');
+      const resultArea = document.getElementById('ai-result-area');
+      const resultText = document.getElementById('ai-result-text');
+
+      if (!userPrompt) {
+        showToastNotification("Por favor, digite algumas ideias ou palavras no campo.");
+        return;
+      }
+
+      loading.classList.remove('hidden');
+      loading.classList.add('flex');
+      genBtn.disabled = true;
+      genBtn.classList.add('opacity-50');
+
+      // Sistema e Persona Educativa rica em criatividade e proibição estrita de repetições
+      const randomSeed = Math.floor(Math.random() * 10000);
+      let systemPrompt = `Tu és um educador(a) de infância excecional, sensível, criativo e atento aos pormenores no Jardim de Infância Alexandre Rodrigues Ferreira em Portugal.
+Escreve sempre em Português de Portugal (PT-PT: "miúdos", "pequenos", "meninos", "equipa", "registo", "partilha", etc.).
+O tom solicitado é ${currentAiTone === 'carinhoso' ? 'caloroso, terno, pedagógico e envolvente' : 'divertido, traquinas, ritmado e expressivo'}.
+
+REGRAS DE OURO DE DIVERSIDADE E ORIGINALIDADE (CRÍTICO):
+1. PROIBIDO começar sempre com as mesmas frases feitas, tais como: "Com muita alegria...", "Este mês foi...", "As nossas crianças...", "Neste mês...", "Foi com entusiasmo...". Varia radicalmente o ponto de partida de cada texto!
+2. Alterna pontos de vista e abordagens:
+   - Começa por uma sensação (o cheiro da tinta fresca, o sussurro das folhas secas, o bater das colheres, as gargalhadas soltas);
+   - Ou começa diretamente por uma ação marcante dos pequenos;
+   - Ou começa por uma pergunta curiosa ou reflexão sobre a infância;
+   - Ou foca-te na transformação dos materiais e nas mãos curiosas.
+3. Não uses estruturas sintáticas repetitivas nem clichés. Sê vivo, original, poético e adequado à vivência real de cada tema.
+4. Devolve APENAS o texto pronto para publicação, sem aspas adicionais, sem introduções nem despedidas metatextuais.
+(Semente criativa única para esta geração: ${randomSeed})`;
+
+      let specificInstruction = "";
+      if (targetType === 'mascot') {
+        const mascotStyles = [
+          "O Traquina fala com entusiasmo traquinas espreitando de trás de uma folha",
+          "O Traquina comenta com orgulho e surpresa o que apanhou no recreio com a sua lupa",
+          "O Traquina dá uma gargalhada cúmplice e convida os leitores a espreitar a página"
+        ];
+        const chosenStyle = mascotStyles[Math.floor(Math.random() * mascotStyles.length)];
+        specificInstruction = `Cria uma fala curta e cativante (1 ou 2 frases) da mascote Traquina (o esquilo curioso com bata de pintura e lápis gigante).
+Estilo pretendido: ${chosenStyle}.
+Nunca comeces por 'Olá traquinas, o Traquina andou por aí a espiar'. Inventa uma saudação ou exclamação diferente e fresca!
+Tema/Ideia: "${userPrompt}"`;
+      } else if (targetType === 'editorial') {
+        const editorialAngles = [
+          "Começa focando o ritmo caloroso do dia a dia e o valor das pequenas descobertas na infância",
+          "Começa com uma imagem poética sobre o crescer juntos e a parceria preciosa com as famílias",
+          "Começa valorizando a curiosidade natural dos meninos e o privilégio de os acompanhar nesta etapa"
+        ];
+        const chosenAngle = editorialAngles[Math.floor(Math.random() * editorialAngles.length)];
+        specificInstruction = `Escreve um pequeno editorial/mensagem calorosa da escola para as famílias (2 a 4 frases).
+Ângulo criativo: ${chosenAngle}.
+Não comeces com 'Bem-vindos a mais uma edição' nem 'Este mês foi repleto'. Varia a abertura de forma inspiradora!
+Ideia base das educadoras: "${userPrompt}"`;
+      } else if (targetType === 'activity') {
+        const actAngles = [
+          "Começa pela ação prática e sensorial das crianças com os materiais",
+          "Começa pelo espanto e pelas descobertas inesperadas que surgiram durante a vivência",
+          "Começa pelo diálogo, cumplicidade e trabalho cooperativo entre os pequenos",
+          "Começa descrevendo a atmosfera vívida da sala ou do espaço exterior"
+        ];
+        const chosenActAngle = actAngles[Math.floor(Math.random() * actAngles.length)];
+        specificInstruction = `Redige uma notícia de atividade para o jornal escolar (2 a 3 frases bem construídas, vivas e fluidas).
+Ângulo narrativo a adotar: ${chosenActAngle}.
+Evita totalmente fórmulas batidas como 'As crianças exploraram...' ou 'Com muita alegria...'. Cria uma narrativa fresca e envolvente.
+Atividade a relatar: "${userPrompt}"`;
+      } else if (targetType === 'quote') {
+        specificInstruction = `Gera uma frase ou pérola espontânea e ternurenta dita por uma criança de 3 a 5 anos sobre: "${userPrompt}". Deve soar autêntica, inocente e genuinamente infantil.`;
+      }
+
+      try {
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+        const payload = {
+          contents: [{ parts: [{ text: specificInstruction }] }],
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          generationConfig: {
+            temperature: 0.95,
+            topP: 0.95
+          }
+        };
+
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error(`Falha na API: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const candidateText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (candidateText && candidateText.trim()) {
+          const cleanText = candidateText.trim().replace(/^["']|["']$/g, '');
+          resultText.textContent = cleanText;
+          resultArea.classList.remove('hidden');
+          document.getElementById('ai-apply-btn').classList.remove('hidden');
+          showToastNotification("Texto original e diversificado gerado com sucesso!");
+        } else {
+          showToastNotification("Não foi possível gerar texto neste momento.");
+        }
+      } catch (err) {
+        console.error("Erro na geração de IA:", err);
+        let fallbackText = "";
+        if (targetType === 'mascot') {
+          const mascotFallbacks = [
+            `Que bela descoberta apanhou o meu lápis traquinas! Parece que ${userPrompt}. Fiquei de queixo caído!`,
+            `Pshiu, guardem segredo: espreitei pela janela da sala e vi que ${userPrompt}. Que maravilha de aventura!`,
+            `A minha cauda de esquilo não pára de saltar de contente ao ver que ${userPrompt}!`,
+            `Alerta de grandes traquinices: o que aconteceu quando ${userPrompt} foi pura magia!`
+          ];
+          fallbackText = mascotFallbacks[Math.floor(Math.random() * mascotFallbacks.length)];
+        } else if (targetType === 'editorial') {
+          const editorialFallbacks = [
+            `No compasso dos dias no nosso jardim de infância, cada olhar atento e cada mãozinha curiosa revelam o milagre do crescimento. ${userPrompt}. Às nossas famílias, o nosso sincero e diário obrigado pela cumplicidade!`,
+            `Há na infância uma sabedoria única que nos ensina a olhar para o mundo com deslumbre renovado. A partilha de vivências como ${userPrompt} reforça a nossa ponte afetiva entre a escola e a vossa casa.`,
+            `Crescer em comunidade é tecer memórias feitas de terra, cores, canções e abraços reconfortantes. O reflexo desse percurso sente-se no entusiasmo com que ${userPrompt}. Obrigado por caminharem lado a lado connosco!`
+          ];
+          fallbackText = editorialFallbacks[Math.floor(Math.random() * editorialFallbacks.length)];
+        } else {
+          const actFallbacks = [
+            `Entre mãos curiosas e perguntas sem fim, os nossos pequenos deram vida a esta experiência: ${userPrompt}. Foi fascinante observar o deslumbramento de cada olhar.`,
+            `A sala transformou-se num verdadeiro laboratório de imaginação enquanto ${userPrompt}. Cada detalhe refletiu a autonomia e a cumplicidade do grupo.`,
+            `Ouviram-se risos e partilhas espontâneas a cada etapa de ${userPrompt}. Uma vivência rica em texturas, afetos e novas aprendizagens partilhadas.`
+          ];
+          fallbackText = actFallbacks[Math.floor(Math.random() * actFallbacks.length)];
+        }
+        resultText.textContent = fallbackText;
+        resultArea.classList.remove('hidden');
+        document.getElementById('ai-apply-btn').classList.remove('hidden');
+        showToastNotification("Sugestão de texto criada com sucesso!");
+      } finally {
+        loading.classList.add('hidden');
+        loading.classList.remove('flex');
+        genBtn.disabled = false;
+        genBtn.classList.remove('opacity-50');
+      }
+    }
+
+    function copyAiResult() {
+      const text = document.getElementById('ai-result-text').textContent;
+      if (!text) return;
+      const tempArea = document.createElement("textarea");
+      tempArea.value = text;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempArea);
+      showToastNotification("Texto copiado para a área de transferência!");
+    }
+
+    function applyAiResultDirectly() {
+      const generated = document.getElementById('ai-result-text').textContent.trim();
+      if (!generated) return;
+
+      if (currentAiContext.targetKey) {
+        state[currentAiContext.targetKey] = generated;
+        const inputEl = document.getElementById(`field-${currentAiContext.targetKey}`);
+        if (inputEl) inputEl.value = generated;
+      } else if (currentAiContext.roomKey === 'general' && currentAiContext.activityId) {
+        const act = state.generalActivities.find(a => a.id === currentAiContext.activityId);
+        if (act) {
+          act.text = generated;
+          renderGeneralActivitiesForm();
+        }
+      } else if (currentAiContext.roomKey && currentAiContext.roomKey.startsWith('extra-') && currentAiContext.activityId) {
+        const pId = parseInt(currentAiContext.roomKey.replace('extra-', ''));
+        const page = state.extraPages.find(p => p.id === pId);
+        if (page) {
+          const act = page.activities.find(a => a.id === currentAiContext.activityId);
+          if (act) {
+            act.text = generated;
+            renderExtraPageEditor(pId);
+          }
+        }
+      } else if (currentAiContext.roomKey && currentAiContext.activityId) {
+        const act = state.rooms[currentAiContext.roomKey].activities.find(a => a.id === currentAiContext.activityId);
+        if (act) {
+          act.text = generated;
+          renderRoomForm(currentAiContext.roomKey);
+        }
+      } else {
+        const targetType = document.getElementById('ai-target-select').value;
+        if (targetType === 'mascot') {
+          state.mascotQuote = generated;
+          document.getElementById('field-mascotQuote').value = generated;
+        } else if (targetType === 'editorial') {
+          state.editorialText = generated;
+          document.getElementById('field-editorialText').value = generated;
+        }
+      }
+
+      renderAllPreview();
+      autoSave();
+      closeAiModal();
+      showToastNotification("Texto inserido diretamente no jornal!");
+    }
+
+    // Inicialização ao carregar o DOM
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
